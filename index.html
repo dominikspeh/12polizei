@@ -5,29 +5,13 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>12 Polizei</title>
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 <h1>1 2 Polizei</h1>
+<hr>
 
-<section>
-    <h2>Index</h2>
-
-    <table>
-        <tr>
-            <td>Monat</td>
-            <td>Tag</td>
-            <td>Uhrzeit</td>
-        </tr>
-        <tr>
-            <td class="month"></td>
-            <td class="day"></td>
-            <td class="time"></td>
-
-        </tr>
-
-    </table>
-</section>
 
 <section id="index">
 
@@ -37,7 +21,7 @@
             <td>Tag</td>
             <td>Uhrzeit</td>
         </tr>
-        <hr>
+
         <tr>
             <td>{{month}}</td>
             <td>{{day}}</td>
@@ -47,8 +31,11 @@
 
     </table>
 
-    <h4>Index: {{index}}</h4>
-    <div id="chart_div"></div>
+
+    <div class="graph" v-bind:class="stage" v-bind:style="graphColor">
+        <h4>{{index}} / 10</h4>
+    </div>
+
 
 
     <!--<button v-on:click="updateTime">Update Time</button>!-->

@@ -1,3 +1,63 @@
+
+// COLORS
+$alert : #c0392b;
+$warning : #e67e22;
+$normal : #2ecc71;
+
+
 body {
-  font-family: "Lato";
+  font-family: 'Lato', sans-serif;
+
+}
+
+#index {
+  margin-top: 40px;
+}
+.graph {
+  width: 200px;
+  height: 200px;
+  border: 6px solid white;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  position: relative;
+  margin: 40px;
+
+  h4 {
+    text-align: center;
+    font-size: 40px;
+
+  }
+}
+.graph:before {
+  content: " ";
+  position: absolute;
+  z-index: -1;
+  top: -12px;
+  left: -12px;
+  right: -12px;
+  bottom: -12px;
+  border-radius: 50%;
+}
+.alert.graph:before{
+    border: 6px solid $alert;
+  }
+
+
+.warning.graph:before{
+    border: 6px solid $warning;
+  }
+
+
+.normal.graph:before{
+    border: 6px solid $normal;
+  }
+
+tr:first-child td {
+  font-weight: bold;
+}
+td {
+  padding-right:20px;
 }

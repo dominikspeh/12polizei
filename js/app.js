@@ -17,7 +17,11 @@ var index = new Vue({
         time: moment().format('HH:mm'),
         tI: "",
 
-        index: ""
+        index: "",
+
+        graphColor: {
+        },
+
 
     },
 
@@ -33,12 +37,32 @@ var index = new Vue({
             }
             else {
                 this.tI = calcData.time[1]
-
             }
 
             var calc1 = ((calcData.month[this.mI]*calcData.day[this.dI])/100)*this.tI/100;
             var calc2 = ((calcData.month[11]*calcData.day[4])/100)*calcData.time[0]/100;
-            this.index = (100/calc2 * calc1/10).toFixed(2)
+            this.index = (100/calc2 * calc1/10).toFixed(1);
+
+            if(this.index < 4) {
+                this.graphColor.backgroundColor = "#2ecc71";
+                this.graphColor.color = "white";
+
+                this.stage = "normal"
+            }
+            if (this.index > 4 && this.index <7 ){
+                this.graphColor.backgroundColor = "#e67e22";
+                this.graphColor.color = "white";
+
+                this.stage = "warning"
+
+            }
+            if (this.index > 7){
+                this.graphColor.backgroundColor = "#c0392b";
+                this.graphColor.color = "white";
+
+                this.stage = "alert"
+            }
+
         },
 
     },
