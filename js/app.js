@@ -1,7 +1,8 @@
 var calcData = {
-    month: [ 9, 7.9, 3.8, 3.8, 8.3, 2.4, 4.3, 4.9, 8.5, 13.5, 12.2, 21.4],
+    month: [ 7.4, 6.7, 6, 6.3, 8.9, 6.3, 7.5, 7.4, 8.8, 9.3, 10.7, 14.7],
     day : [13.4, 14, 14.9, 16.1, 17.6, 14.4, 9.6 ],
     time: [86, 14]
+
 
 }
 
@@ -19,24 +20,32 @@ var index = new Vue({
 
         index: "",
 
-        graphColor: {
-        },
+        graphColor: {},
 
+        customSelection: false
 
     },
 
 
     methods: {
-        updateTime: function () {
-           this.time = moment().format('HH:mm')
+        changeTime: function () {
+
+
+
         },
 
+
         calculate: function () {
-            if (this.time < "21:00"){
-                this.tI = calcData.time[0]
-            }
-            else {
-                this.tI = calcData.time[1]
+
+            if(!this.customSelection){
+                if (this.time < "21:00"){
+                    this.tI = calcData.time[0];
+                    $('.switch input').attr( 'checked', true )
+                }
+                else {
+                    this.tI = calcData.time[1];
+                    $('.switch input').attr( 'checked', false )
+                }
             }
 
             var calc1 = ((calcData.month[this.mI]*calcData.day[this.dI])/100)*this.tI/100;
@@ -44,27 +53,31 @@ var index = new Vue({
             this.index = (100/calc2 * calc1/10).toFixed(1);
 
             if(this.index < 4) {
-                this.graphColor.backgroundColor = "#2ecc71";
+                this.graphColor.backgroundColor = "#95a5a6";
                 this.graphColor.color = "white";
 
-                this.stage = "normal"
+                this.stage = "niedrig"
             }
             if (this.index > 4 && this.index <7 ){
                 this.graphColor.backgroundColor = "#e67e22";
                 this.graphColor.color = "white";
 
-                this.stage = "warning"
+                this.stage = "mittel"
 
             }
             if (this.index > 7){
                 this.graphColor.backgroundColor = "#c0392b";
                 this.graphColor.color = "white";
+                this.stage = "hoch";
 
-                this.stage = "alert"
+                if(this.index == 10){
+                    this.graphColor.backgroundColor = "#c0392b";
+                    this.graphColor.color = "white";
+                    this.stage = "hoch";
+                    this.index = 10
+                }
             }
-
         },
-
     },
 
     created: function () {
