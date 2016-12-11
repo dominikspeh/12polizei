@@ -6,63 +6,50 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>12 Polizei</title>
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link rel="stylesheet" href="node_modules/animate.css/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="node_modules/fullpage.js/dist/jquery.fullPage.css" />
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<h1>1 2 Polizei</h1>
-<hr>
-
-
-<section id="index">
-    <table>
-        <tr>
-            <td>Monat</td>
-            <td>Tag</td>
-            <td>Uhrzeit</td>
-        </tr>
-
-        <tr>
-            <td>{{month}}</td>
-            <td>{{day}}</td>
-            <td>{{time}}</td>
-
-        </tr>
-    </table>
-
-    <div class="iCharts">
-        <div id="day"></div>
-
-        <div id="ewi" style="width: 300px">
-            <!-- Rounded switch -->
-        </div>
-
-        <div id="month"></div>
+<ul id="menu">
+    <li data-menuanchor="firstPage"><a href="#welcome">Welcome</a></li>
+    <li data-menuanchor="secondPage"><a href="#einbruch">EWI</a></li>
+    <li data-menuanchor="3rdPage"><a href="#secondPage">Second slide</a></li>
+    <li data-menuanchor="4rdPage"><a href="#3rdPage">Third slide</a></li>
+</ul>
+<div id="fullpage">
+    <div class="section" id="section0">
+        <h1>HELLO!</h1>
     </div>
-    <label class="switch">
-        <input v-on:click="changeTime"  type="checkbox" >
-        <div class="slider round"></div>
-    </label>
+    <div class="section" id="section1">
+        <section id="index">
 
+            <index-chart ref="ichart"></index-chart>
 
-
-
-
-    <!--
-        <div class="graph" v-bind:class="stage" v-bind:style="graphColor">
-            <h4>{{index}} / 10</h4>
-        </div>
-
-    !-->
-
-    <!--<button v-on:click="updateTime">Update Time</button>!-->
-</section>
-
+        </section>
+    </div>
+    <div class="section" id="section2">
+        <div class="slide "><h1>Simple Demo</h1></div>
+        <div class="slide active"><h1>Only text</h1></div>
+        <div class="slide"><h1>And text</h1></div>
+        <div class="slide"><h1>And more text</h1></div>
+    </div>
+    <div class="section" id="section3"><h1>No wraps, no extra markup</h1></div>
+    <div class="section" id="section4"><h1>Just the simplest demo ever</h1></div>
+</div>
 
 <script src="https://unpkg.com/vue/dist/vue.js"></script>
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script>
+    google.charts.load('current', {'packages':['bar','corechart']});
+</script>
 
 <script src="node_modules/jquery/dist/jquery.min.js"></script>
+
+
+<script type="text/javascript" src="node_modules/fullpage.js/dist/jquery.fullPage.js"></script>
+
 <script src="js/jquery.circliful.min.js"></script>
 
 <script src="node_modules/moment/moment.js"></script>

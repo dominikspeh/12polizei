@@ -1,16 +1,50 @@
 body {
   font-family: 'Lato', sans-serif; }
 
+#menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 80px;
+  z-index: 70;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  background-color: #7f8c8d;
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+  #menu li {
+    display: inline;
+    margin-right: 20px; }
+    #menu li a {
+      text-decoration: none;
+      color: white;
+      text-transform: uppercase;
+      font-weight: 300;
+      font-size: 17px; }
+
+#section0 {
+  background-image: url(../img/burglar.jpg); }
+
+#ewi {
+  opacity: 0; }
+
 #index {
   margin-top: 40px;
   margin-bottom: 40px; }
   #index table {
     margin: 0 auto; }
 
-.iCharts {
+#iCharts {
   display: flex;
-  height: 400px;
+  height: 600px;
+  align-items: center;
+  align-content: center;
   justify-content: space-around; }
+
+#index-day, #index-month {
+  height: 600px; }
 
 .graph {
   width: 200px;
@@ -51,6 +85,10 @@ tr:first-child td {
 
 td {
   padding-right: 20px; }
+
+svg g g g g rect {
+  stroke-width: 0px;
+  fill: #16a085; }
 
 .switch {
   position: relative;
