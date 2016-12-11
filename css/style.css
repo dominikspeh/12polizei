@@ -27,9 +27,6 @@ body {
 #section0 {
   background-image: url(../img/burglar.jpg); }
 
-#ewi {
-  opacity: 0; }
-
 #index {
   margin-top: 40px;
   margin-bottom: 40px; }
@@ -88,7 +85,15 @@ td {
 
 svg g g g g rect {
   stroke-width: 0px;
-  fill: #16a085; }
+  fill: #7f8c8d; }
+
+[data-rel="day"] {
+  background-color: #2980b9 !important;
+  transition: background-color 2s; }
+
+[data-rel="night"] {
+  background-color: #2c3e50 !important;
+  transition: background-color 2s; }
 
 .switch {
   position: relative;

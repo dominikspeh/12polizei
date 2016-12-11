@@ -7,7 +7,9 @@ var calcData = {
 }
 
 var indexChart = Vue.component('index-chart', {
-    template: '<section><div id="iCharts"> ' +
+    template: '<div :data-rel="this.$root.indexDay" class=" section" id="section1">' +
+    '<section id="index">'+
+    '<div id="iCharts"> ' +
     '<div id="index-day"></div>' +
     '<div id="ewi" style="width: 400px"></div>' +
     '<div id="index-month"></div>' +
@@ -15,7 +17,9 @@ var indexChart = Vue.component('index-chart', {
     '<label v-on:click="changeTime" class="switch">'+
     '<input type="checkbox" >'+
     '<div class="slider round"></div>'+
-    '</label></section>',
+    '</label>' +
+    '</section>' +
+    '</div>',
 
 
     data: function () {
@@ -46,6 +50,7 @@ var indexChart = Vue.component('index-chart', {
 
 
 
+
     },
 
     methods: {
@@ -57,6 +62,8 @@ var indexChart = Vue.component('index-chart', {
 
                 // background color
                 backgroundColor: "#eee",
+
+                fillColor: 'white',
 
                 // width of foreground circle border
                 foregroundBorderWidth: 15,
@@ -77,13 +84,7 @@ var indexChart = Vue.component('index-chart', {
                 animation: 1,
 
                 // from 0 to 100
-                animationStep: 6,
-
-                // icon size
-                iconSize: '20px',
-
-                // icon color
-                iconColor: '#999',
+                animationStep: 3,
 
                 // top, bottom, left, right or middle
                 iconPosition: 'center',
@@ -125,14 +126,38 @@ var indexChart = Vue.component('index-chart', {
                     chart: {
                         title: 'Wochentag',
                     },
-                    colors: ['#95a5a6'],
-                    bars: 'horizontal',
-                    legend: { position: "none" },
+                    vAxis: {
+                        textStyle:{
+                            color: '#FFF'
+                        }
+                    },
+                    hAxis : {
+                        showTextEvery : 2,
+                        title : "Einbrüche in Prozent",
+                        titleTextStyle: {color: 'white'},
+
+                        format : 'decimal',
+                        gridlines: {
+                            count: 10,
+                            color: 'white'
+                        },
+                        baselineColor: 'white',
+                        textStyle:{
+                            color: '#FFF'
+                        }
+                    },
+                    colors: ['#bdc3c7'],
                     animation:{
                         duration: 2000,
                         easing: 'out',
                         startup: true,
                     },
+                    backgroundColor: { fill:'transparent' },
+                    legend: { position: "none" },
+
+                    bars: 'horizontal',
+
+
 
 
                 };
@@ -155,6 +180,8 @@ var indexChart = Vue.component('index-chart', {
 
                 chart.draw(data, options);
                 chart.setSelection([{"row":vm.dI,"column":1}]);
+
+
 
             });
 
@@ -186,14 +213,36 @@ var indexChart = Vue.component('index-chart', {
                     chart: {
                         title: 'Monat'
                     },
-                    colors: ['#95a5a6'],
+                    colors: ['#bdc3c7'],
                     animation:{
                         duration: 2000,
                         easing: 'out',
                         startup: true,
                     },
                     bars: 'horizontal',
-                    legend: { position: "none" }
+                    backgroundColor: { fill:'transparent' },
+                    legend: { position: "none" },
+                    vAxis: {
+                        textStyle:{
+                            color: '#FFF'
+                        }
+                    },
+                    hAxis : {
+                        showTextEvery : 2,
+                        title : "Einbrüche in Prozent",
+                        titleTextStyle: {color: 'white'},
+                        format : 'decimal',
+                        gridlines: {
+                            count: 6,
+                            color: 'white'
+                        },
+                        baselineColor: 'white',
+                        textStyle:{
+                            color: '#FFF'
+                        }
+                    }
+
+
                 };
 
 
@@ -234,10 +283,12 @@ var indexChart = Vue.component('index-chart', {
                 if (this.time < "21:00") {
                     this.tI = calcData.time[0];
                     $('.switch input').attr('checked', true)
+                    this.$root.indexDay = "day"
                 }
                 else {
                     this.tI = calcData.time[1];
                     $('.switch input').attr('checked', false)
+                    this.$root.indexDay = "night"
                 }
             }
 
@@ -277,11 +328,13 @@ var indexChart = Vue.component('index-chart', {
 
             if($(".switch input").is(':checked')){
                 this.tI = calcData.time[0];
+                this.$root.indexDay = "day"
                 this.calculate()
 
             }
             else {
                 this.tI = calcData.time[1];
+                this.$root.indexDay = "night"
                 this.calculate()
 
             }
@@ -304,6 +357,9 @@ var index = new Vue({
     components: {
         'index-chart': indexChart
     },
+    data: {
+        indexDay : "aa"
+    },
 
     mounted: function () {
         var vm = this;
@@ -313,8 +369,10 @@ var index = new Vue({
             anchors: ['welcome','einbruch', 'secondPage', '3rdPage'],
             sectionsColor: ['#aaa', 'white', '#7BAABE', 'whitesmoke', '#ccddff'],
             navigation: true,
+            scrollDelay: 2000,
             navigationPosition: 'right',
             navigationTooltips: ['Hello','EWI', 'Second page', 'Third and last page'],
+
 
             afterLoad: function(anchorLink, index){
                 if(index == 2){
