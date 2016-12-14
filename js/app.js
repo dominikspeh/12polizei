@@ -13,12 +13,12 @@ var indexChart = Vue.component('index-chart', {
     '<div class="section" id="section1">' +
     '<transition name="fade">' +
     '   <video v-show="indexDay" autoplay loop muted id="myVideo">'+
-    '       <source src="dhbw.domi-speh.de/12polizei/media/day.mp4" type="video/mp4">' +
+    '       <source src="http://dhbw.domi-speh.de/12polizei/media/day.mp4" type="video/mp4">' +
     '   </video>' +
     '</transition>' +
     '<transition name="fade">' +
     '   <video v-show="!indexDay" autoplay loop muted id="myVideo">' +
-    '       <source src="dhbw.domi-speh.de/12polizei/media/night.mp4" type="video/mp4">' +
+    '       <source src="http://dhbw.domi-speh.de/12polizei/media/night.mp4" type="video/mp4">' +
     '   </video>' +
     '</transition>' +
     '<div :data-rel="indexDay"  class="layer">' +
