@@ -1,24 +1,42 @@
 var calcData = {
+    months: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
+    days: ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag', 'Sonntag'],
     month: [ 7.4, 6.7, 6, 6.3, 8.9, 6.3, 7.5, 7.4, 8.8, 9.3, 10.7, 14.7],
     day : [13.4, 14, 14.9, 16.1, 17.6, 14.4, 9.6 ],
     time: [86, 14]
 
 
-}
+};
 
 var indexChart = Vue.component('index-chart', {
-    template: '<div :data-rel="this.$root.indexDay" class=" section" id="section1">' +
+    template: '' +
+    '<div class="section" id="section1">' +
+    '<transition name="fade">' +
+    '   <video v-show="indexDay" autoplay loop muted id="myVideo">'+
+    '       <source src="dhbw.domi-speh.de/12polizei/media/day.mp4" type="video/mp4">' +
+    '   </video>' +
+    '</transition>' +
+    '<transition name="fade">' +
+    '   <video v-show="!indexDay" autoplay loop muted id="myVideo">' +
+    '       <source src="dhbw.domi-speh.de/12polizei/media/night.mp4" type="video/mp4">' +
+    '   </video>' +
+    '</transition>' +
+    '<div :data-rel="indexDay"  class="layer">' +
+    '   <h1>Einbruchsrisiko</h1>' +
+    '<p>Die Farbskala ist in drei Farben unterteilt. Grau steht für geringes Risiko, Orange steht für mittleres Risiko und Rot für erhötes Risiko. Die Farbe wird anhand der Tageszeit, des Wochentags und des Monats bestimmt.</p>' +
     '<section id="index">'+
-    '<div id="iCharts"> ' +
-    '<div id="index-day"></div>' +
-    '<div id="ewi" style="width: 400px"></div>' +
-    '<div id="index-month"></div>' +
-    '</div>' +
-    '<label v-on:click="changeTime" class="switch">'+
-    '<input type="checkbox" >'+
-    '<div class="slider round"></div>'+
-    '</label>' +
-    '</section>' +
+    '       <div id="iCharts"> ' +
+    '           <div id="index-day"></div>' +
+    '           <div id="ewi" style="width: 350px">' +
+    '<h3><small>Aktuelle Auswahl:</small><br>{{month}} | {{day}} </h3></div>' +
+    '           <div id="index-month"></div>' +
+    '       </div>' +
+    '       <label v-on:click="changeTime" class="switch">'+
+    '           <input type="checkbox" >'+
+    '           <div class="slider round"></div>'+
+    '       </label>' +
+    '   </section>' +
+    '</div>'+
     '</div>',
 
 
@@ -36,6 +54,8 @@ var indexChart = Vue.component('index-chart', {
 
             index: "",
 
+            indexDay: false,
+
             graphColor: {},
 
             customSelection: false
@@ -44,7 +64,6 @@ var indexChart = Vue.component('index-chart', {
         }
     },
     mounted: function () {
-
         this.calculate();
 
 
@@ -62,8 +81,6 @@ var indexChart = Vue.component('index-chart', {
 
                 // background color
                 backgroundColor: "#eee",
-
-                fillColor: 'white',
 
                 // width of foreground circle border
                 foregroundBorderWidth: 15,
@@ -84,7 +101,7 @@ var indexChart = Vue.component('index-chart', {
                 animation: 1,
 
                 // from 0 to 100
-                animationStep: 3,
+                animationStep: 4,
 
                 // top, bottom, left, right or middle
                 iconPosition: 'center',
@@ -99,7 +116,7 @@ var indexChart = Vue.component('index-chart', {
                 targetTextSize: 17,
 
                 // font color of the info text
-                textColor: '#666',
+                textColor: 'white',
 
                 replacePercentageByText: this.stage
 
@@ -123,9 +140,10 @@ var indexChart = Vue.component('index-chart', {
                 ]);
 
                 var options = {
-                    chart: {
-                        title: 'Wochentag',
-                    },
+
+                    title: 'Wochentag',
+                    titleColor: 'white',
+
                     vAxis: {
                         textStyle:{
                             color: '#FFF'
@@ -146,7 +164,7 @@ var indexChart = Vue.component('index-chart', {
                             color: '#FFF'
                         }
                     },
-                    colors: ['#bdc3c7'],
+                    colors: ['#2B8FE5'],
                     animation:{
                         duration: 2000,
                         easing: 'out',
@@ -169,6 +187,7 @@ var indexChart = Vue.component('index-chart', {
                     var selection = chart.getSelection();
                     if(selection.length > 0) {
                         vm.dI = selection[0].row;
+                        vm.day = calcData.days[vm.dI];
                         vm.customSelection = true;
                         vm.calculate();
                         vm.generateIndexChart();
@@ -210,10 +229,11 @@ var indexChart = Vue.component('index-chart', {
                 ]);
 
                 var options = {
-                    chart: {
-                        title: 'Monat'
-                    },
-                    colors: ['#bdc3c7'],
+
+                    title: 'Monat',
+                    titleColor: 'white',
+
+                    colors: ['#2B8FE5'],
                     animation:{
                         duration: 2000,
                         easing: 'out',
@@ -260,6 +280,7 @@ var indexChart = Vue.component('index-chart', {
 
                     if(selection.length > 0) {
                         vm.mI = selection[0].row;
+                        vm.month = calcData.months[vm.mI];
                         vm.customSelection = true;
                         vm.calculate();
                         vm.generateIndexChart();
@@ -283,12 +304,12 @@ var indexChart = Vue.component('index-chart', {
                 if (this.time < "21:00") {
                     this.tI = calcData.time[0];
                     $('.switch input').attr('checked', true)
-                    this.$root.indexDay = "day"
+                    this.indexDay = true
                 }
                 else {
                     this.tI = calcData.time[1];
                     $('.switch input').attr('checked', false)
-                    this.$root.indexDay = "night"
+                    this.indexDay = false
                 }
             }
 
@@ -328,20 +349,19 @@ var indexChart = Vue.component('index-chart', {
 
             if($(".switch input").is(':checked')){
                 this.tI = calcData.time[0];
-                this.$root.indexDay = "day"
+                this.indexDay = true
                 this.calculate()
 
             }
             else {
                 this.tI = calcData.time[1];
-                this.$root.indexDay = "night"
+                this.indexDay = false
                 this.calculate()
 
             }
             this.generateIndexChart();
         }
     },
-
 
     created: function () {
 
@@ -357,9 +377,7 @@ var index = new Vue({
     components: {
         'index-chart': indexChart
     },
-    data: {
-        indexDay : "aa"
-    },
+    data: {},
 
     mounted: function () {
         var vm = this;
@@ -367,15 +385,20 @@ var index = new Vue({
         $('#fullpage').fullpage({
             css3 : true,
             anchors: ['welcome','einbruch', 'secondPage', '3rdPage'],
-            sectionsColor: ['#aaa', 'white', '#7BAABE', 'whitesmoke', '#ccddff'],
+            sectionsColor: ['#aaa', '#0C2840', '#184F7F', '#0C2840'],
             navigation: true,
             scrollDelay: 2000,
             navigationPosition: 'right',
-            navigationTooltips: ['Hello','EWI', 'Second page', 'Third and last page'],
+            navigationTooltips: ['Hello','EWI', 'Second page', 'Third'],
 
 
             afterLoad: function(anchorLink, index){
                 if(index == 2){
+
+                    $('video').get(0).play();
+                    $('video').get(1).play();
+
+
                     vm.$refs.ichart.generateDay();
                     vm.$refs.ichart.generateMonth();
                     vm.$refs.ichart.generateIndexChart();
