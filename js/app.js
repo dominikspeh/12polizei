@@ -128,21 +128,39 @@ var indexChart = Vue.component('index-chart', {
 
             google.charts.setOnLoadCallback(function () {
 
-                var data = google.visualization.arrayToDataTable([
-                    ['Wochentag', 'Einbrüche in %'],
-                    ['Mo', calcData.day[0]],
-                    ['Di', calcData.day[1]],
-                    ['Mi', calcData.day[2]],
-                    ['Do', calcData.day[3]],
-                    ['Fr', calcData.day[4]],
-                    ['Sa', calcData.day[5]],
-                    ['So', calcData.day[6]]
+                var data = new google.visualization.DataTable();
+                data.addColumn('string', 'Wochentag'); // Implicit domain label col.
+                data.addColumn('number', 'Einbrüche in %'); // Implicit series 1 data col.
+                data.addColumn({'type': 'string', 'role': 'tooltip', 'p': {'html': true}})
+
+
+                data.addRows([
+
+                    [{v:"Mo",f:"Mo"},calcData.day[0], generateHTML(calcData.days[0],calcData.day[0])],
+
+                    [{v:"Di",f:"Di"},calcData.day[1], generateHTML(calcData.days[1],calcData.day[1])],
+
+                    [{v:"Mi",f:"Mi"},calcData.day[2], generateHTML(calcData.days[2],calcData.day[2])],
+
+                    [{v:"Do",f:"Do"},calcData.day[3], generateHTML(calcData.days[3],calcData.day[3])],
+
+                    [{v:"Fr",f:"Fr"},calcData.day[4], generateHTML(calcData.days[4],calcData.day[4])],
+
+                    [{v:"Sa",f:"Sa"},calcData.day[5], generateHTML(calcData.days[5],calcData.day[5])],
+
+                    [{v:"So",f:"So"},calcData.day[6], generateHTML(calcData.days[6],calcData.day[6])],
+
+
                 ]);
+
+
 
                 var options = {
 
                     title: 'Wochentag',
                     titleColor: 'white',
+                    tooltip: { isHtml: true },
+
 
                     vAxis: {
                         textStyle:{
@@ -201,6 +219,12 @@ var indexChart = Vue.component('index-chart', {
                 chart.setSelection([{"row":vm.dI,"column":1}]);
 
 
+                function generateHTML (tag, prozent) {
+                    return '<div class="tooltip"><h5>' + tag + '</h5> <p>'+prozent+ '%</p><div/>' ;
+
+                }
+
+
 
             });
 
@@ -211,27 +235,49 @@ var indexChart = Vue.component('index-chart', {
             var vm = this;
 
             google.charts.setOnLoadCallback(function () {
-                var data = google.visualization.arrayToDataTable([
-                    ['Monat', 'Einbrüche in %'],
-                    ['Jan', calcData.month[0]],
-                    ['Feb', calcData.month[1]],
-                    ['Mär', calcData.month[2]],
-                    ['Apr', calcData.month[3]],
-                    ['Mai', calcData.month[4]],
-                    ['Jun', calcData.month[5]],
-                    ['Jul', calcData.month[6]],
-                    ['Aug', calcData.month[7]],
-                    ['Sep', calcData.month[8]],
-                    ['Okt', calcData.month[9]],
-                    ['Nov', calcData.month[10]],
-                    ['Dez', calcData.month[11]],
+
+                var data = new google.visualization.DataTable();
+                data.addColumn('string', 'Wochentag'); // Implicit domain label col.
+                data.addColumn('number', 'Einbrüche in %'); // Implicit series 1 data col.
+                data.addColumn({'type': 'string', 'role': 'tooltip', 'p': {'html': true}})
+
+
+                data.addRows([
+
+                    [{v:"Jan",f:"Jan"},calcData.month[0], generateHTML(calcData.months[0],calcData.month[0])],
+
+                    [{v:"Feb",f:"Feb"},calcData.month[1], generateHTML(calcData.months[1],calcData.month[1])],
+
+                    [{v:"Mär",f:"Mär"},calcData.month[2], generateHTML(calcData.months[2],calcData.month[2])],
+
+                    [{v:"Apr",f:"Apr"},calcData.month[3], generateHTML(calcData.months[3],calcData.month[3])],
+
+                    [{v:"Mai",f:"Mai"},calcData.month[4], generateHTML(calcData.months[4],calcData.month[4])],
+
+                    [{v:"Jun",f:"Jun"},calcData.month[5], generateHTML(calcData.months[5],calcData.month[5])],
+
+                    [{v:"Jul",f:"Jul"},calcData.month[6], generateHTML(calcData.months[6],calcData.month[6])],
+
+                    [{v:"Aug",f:"Aug"},calcData.month[7], generateHTML(calcData.months[7],calcData.month[7])],
+
+                    [{v:"Sep",f:"Sep"},calcData.month[8], generateHTML(calcData.months[8],calcData.month[8])],
+
+                    [{v:"Okt",f:"Okt"},calcData.month[9], generateHTML(calcData.months[9],calcData.month[9])],
+
+                    [{v:"Nov",f:"Nov"},calcData.month[10], generateHTML(calcData.months[10],calcData.month[10])],
+
+                    [{v:"Dez",f:"Dez"},calcData.month[11], generateHTML(calcData.months[11],calcData.month[11])],
+
+
 
                 ]);
+           
 
                 var options = {
 
                     title: 'Monat',
                     titleColor: 'white',
+                    tooltip: { isHtml: true },
 
                     colors: ['#2B8FE5'],
                     animation:{
@@ -270,6 +316,8 @@ var indexChart = Vue.component('index-chart', {
 
 
 
+
+
                 chart.draw(data, options);
                 chart.setSelection([{"row":vm.mI,"column":1}]);
 
@@ -290,6 +338,11 @@ var indexChart = Vue.component('index-chart', {
                 google.visualization.events.addListener(chart, 'error', function (googleError) {
                     google.visualization.errors.removeError(googleError.id);
                 });
+
+                function generateHTML (monat, prozent) {
+                    return '<div class="tooltip"><h5>' + monat + '</h5> <p>'+prozent+ '%</p><div/>' ;
+
+                }
 
 
             })
