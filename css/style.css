@@ -18,12 +18,11 @@ p {
   position: fixed;
   top: 0;
   left: 0;
-  height: 80px;
+  height: 50px;
   z-index: 70;
   width: 100%;
   padding: 0;
   margin: 0;
-  background-color: #7f8c8d;
   display: flex;
   align-items: center;
   justify-content: center; }
@@ -45,7 +44,8 @@ p {
 
 .section {
   text-align: center;
-  color: white; }
+  color: white;
+  overflow: hidden; }
   .section p {
     max-width: 700px;
     text-align: center;
@@ -102,7 +102,7 @@ p {
   position: absolute;
   right: 0;
   bottom: 0;
-  top: 0;
+  top: 30px;
   right: 0;
   width: 100%;
   height: 100%;
@@ -130,7 +130,8 @@ p {
   position: relative;
   display: inline-block;
   width: 60px;
-  height: 34px; }
+  height: 34px;
+  margin-top: -70px; }
 
 .switch input {
   display: none; }
@@ -174,6 +175,34 @@ input:checked + .slider:before {
 
 .slider.round:before {
   border-radius: 50%; }
+
+.df {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around; }
+  .df div {
+    position: relative;
+    width: 440px; }
+
+.badges {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  opacity: 0; }
+  .badges li {
+    cursor: pointer;
+    position: absolute;
+    list-style: none;
+    background-color: #0C2840;
+    border-radius: 50%;
+    padding: 16px 10px;
+    color: white;
+    display: inline-flex;
+    align-content: center;
+    align-items: center;
+    transition: background-color 1s; }
+  .badges li:hover {
+    background-color: #309FFF; }
 
 .fade-enter-active, .fade-leave-active {
   transition: opacity 2s; }

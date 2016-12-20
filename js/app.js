@@ -437,19 +437,19 @@ var index = new Vue({
 
         $('#fullpage').fullpage({
             css3 : true,
-            anchors: ['welcome','einbruch', 'secondPage', '3rdPage'],
-            sectionsColor: ['#aaa', '#0C2840', '#184F7F', '#0C2840'],
+            anchors: ['welcome','risiko', 'einbruchstellen', '3rdPage'],
+            sectionsColor: ['#aaa', '', '#184F7F', '#0C2840'],
             navigation: true,
             scrollDelay: 2000,
             navigationPosition: 'right',
-            navigationTooltips: ['Hello','EWI', 'Second page', 'Third'],
+            navigationTooltips: ['Hello','Risiko', 'Einbruchstellen', 'Third'],
 
 
             afterLoad: function(anchorLink, index){
                 if(index == 2){
 
-                    $('video').get(0).play();
-                    $('video').get(1).play();
+                    //$('video').get(0).play();
+                    //$('video').get(1).play();
 
 
                     vm.$refs.ichart.generateDay();
@@ -464,6 +464,11 @@ var index = new Vue({
                     $('#ewi, #index-day, #index-month').addClass('animated fadeOut');
 
                     $("#ewi svg").remove();
+
+                }
+
+                if(index == 3){
+                    $('.badges').addClass('animated fadeInRight');
 
                 }
             }

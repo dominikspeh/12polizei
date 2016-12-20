@@ -5,7 +5,7 @@ $warning : #e67e22;
 $normal : #95a5a6;
 
 $brand: #0C2840;
-
+$brandHover: #309FFF;
 
 body {
   font-family: 'Lato', sans-serif;
@@ -24,16 +24,16 @@ p {
   font-weight: 300;
   font-size: 15px;
 }
+
 #menu{
   position:fixed;
   top:0;
   left:0;
-  height: 80px;
+  height: 50px;
   z-index: 70;
   width: 100%;
   padding: 0;
   margin:0;
-  background-color: #7f8c8d;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -63,6 +63,7 @@ p {
 .section {
   text-align: center;
   color: white;
+  overflow: hidden;
   p{
     max-width: 700px;
     text-align: center;
@@ -132,7 +133,7 @@ p {
   position: absolute;
   right: 0;
   bottom: 0;
-  top:0;
+  top:30px;
   right:0;
   width: 100%;
   height: 100%;
@@ -158,9 +159,6 @@ p {
 }
 
 
-
-
-
 [data-rel="true"] {
   h1 {
     color: white;
@@ -173,6 +171,7 @@ p {
   display: inline-block;
   width: 60px;
   height: 34px;
+  margin-top:-70px;
   }
 
 .switch input {display:none;}
@@ -225,6 +224,43 @@ input:checked + .slider:before {
 }
 
 
+//Einbruchsort
+.df {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+
+  div {
+    position: relative;
+    width: 440px;
+  }
+}
+
+.badges {
+  position: absolute!important;
+  top:0;
+  left:0;
+  opacity: 0;
+
+  li {
+    cursor: pointer;
+    position: absolute;
+    list-style: none;
+    background-color: $brand;
+    border-radius: 50%;
+    padding: 16px 10px;
+    color: white;
+    display: inline-flex;
+    align-content: center;
+    align-items: center;
+
+    transition: background-color 1s;
+  }
+
+  li:hover {
+    background-color: $brandHover;
+  }
+}
 
 // VUE TRANSITIONS
 .fade-enter-active, .fade-leave-active {
