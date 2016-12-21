@@ -8,6 +8,7 @@ var calcData = {
 
 };
 
+// Components
 var indexChart = Vue.component('index-chart', {
     template: '' +
     '<div class="section" id="section1">' +
@@ -423,7 +424,9 @@ var indexChart = Vue.component('index-chart', {
     }
 });
 
+var einbruchsstellen = Vue.component('einbruchstellen', {
 
+});
 
 var index = new Vue({
     el: '#fullpage',
@@ -446,30 +449,22 @@ var index = new Vue({
 
 
             afterLoad: function(anchorLink, index){
-                if(index == 2){
 
-                    //$('video').get(0).play();
-                    //$('video').get(1).play();
+                switch(index) {
+                    case 2:
+                        //$('video').get(0).play();
+                        //$('video').get(1).play();
 
+                        vm.$refs.ichart.generateDay();
+                        vm.$refs.ichart.generateMonth();
+                        vm.$refs.ichart.generateIndexChart();
+                        $('#ewi, #index-day, #index-month').removeClass('fadeOut');
 
-                    vm.$refs.ichart.generateDay();
-                    vm.$refs.ichart.generateMonth();
-                    vm.$refs.ichart.generateIndexChart();
-                    $('#ewi, #index-day, #index-month').removeClass('fadeOut');
-
-                    $('#ewi, #index-day, #index-month').addClass('animated fadeIn');
-                }
-                else {
-                    $('#ewi, #index-day, #index-month').removeClass('fadeIn');
-                    $('#ewi, #index-day, #index-month').addClass('animated fadeOut');
-
-                    $("#ewi svg").remove();
-
-                }
-
-                if(index == 3){
-                    $('.badges').addClass('animated fadeInRight');
-
+                        $('#ewi, #index-day, #index-month').addClass('animated fadeIn');
+                        break;
+                    case 3:
+                        $('.badges li').addClass('animated pulse');
+                        break;
                 }
             }
         });

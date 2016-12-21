@@ -16,9 +16,10 @@ p {
 
 #menu {
   position: fixed;
+  border-bottom: 1px solid #309FFF;
   top: 0;
   left: 0;
-  height: 50px;
+  height: 70px;
   z-index: 70;
   width: 100%;
   padding: 0;
@@ -102,7 +103,7 @@ p {
   position: absolute;
   right: 0;
   bottom: 0;
-  top: 30px;
+  top: 0;
   right: 0;
   width: 100%;
   height: 100%;
@@ -115,7 +116,7 @@ p {
 
 #iCharts {
   display: flex;
-  height: 470px;
+  height: 450px;
   align-items: center;
   align-content: center;
   justify-content: space-around; }
@@ -187,8 +188,7 @@ input:checked + .slider:before {
 .badges {
   position: absolute !important;
   top: 0;
-  left: 0;
-  opacity: 0; }
+  left: 0; }
   .badges li {
     cursor: pointer;
     position: absolute;
