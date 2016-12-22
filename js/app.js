@@ -12,30 +12,25 @@ var calcData = {
 var indexChart = Vue.component('index-chart', {
     template: '' +
     '<div class="section" id="section1">' +
-    '<transition name="fade">' +
-    '   <video v-show="indexDay" autoplay loop muted id="myVideo">'+
-    '       <source src="http://dhbw.domi-speh.de/12polizei/media/day.mp4" type="video/mp4">' +
-    '   </video>' +
-    '</transition>' +
-    '<transition name="fade">' +
-    '   <video v-show="!indexDay" autoplay loop muted id="myVideo">' +
-    '       <source src="http://dhbw.domi-speh.de/12polizei/media/night.mp4" type="video/mp4">' +
-    '   </video>' +
-    '</transition>' +
     '<div :data-rel="indexDay"  class="layer">' +
+    '<div>' +
     '   <h1>Einbruchsrisiko</h1>' +
-    '<p>Die Farbskala ist in drei Farben unterteilt. Grau steht für geringes Risiko, Orange steht für mittleres Risiko und Rot für erhötes Risiko. Die Farbe wird anhand der Tageszeit, des Wochentags und des Monats bestimmt.</p>' +
+    '   <p>Die Farbskala ist in drei Farben unterteilt. Grau steht für geringes Risiko, Orange steht für mittleres Risiko und Rot für erhötes Risiko. Die Farbe wird anhand der Tageszeit, des Wochentags und des Monats bestimmt.</p>' +
+    '</div>' +
     '<section id="index">'+
     '       <div id="iCharts"> ' +
     '           <div id="index-day"></div>' +
-    '           <div id="ewi" style="width: 350px">' +
-    '<h3><small>Aktuelle Auswahl:</small><br>{{month}} | {{day}} </h3></div>' +
+    '           <div :data-rel="stage"  id="ewi" style="width: 350px">' +
+    '<div v-on:click="changeTime" class="slider">' +
+    '   <img class="day" src="img/daytime-large-day.png">' +
+    '   <img class="night" src="img/daytime-large-night.png">' +
+    '</div>' +
+    '<h3><small>Aktuelle Auswahl:</small><br>{{day}} | {{month}} </h3>' +
+    '<div class="graphic"></div>' +
+    '<span>{{stage}} Einbruchsrisiko</span>' +
+    '</div>' +
     '           <div id="index-month"></div>' +
     '       </div>' +
-    '       <label v-on:click="changeTime" class="switch">'+
-    '           <input type="checkbox" >'+
-    '           <div class="slider round"></div>'+
-    '       </label>' +
     '   </section>' +
     '</div>'+
     '</div>',
@@ -54,6 +49,8 @@ var indexChart = Vue.component('index-chart', {
             tI: "",
 
             index: "",
+
+            stage: "",
 
             indexDay: false,
 
@@ -74,55 +71,6 @@ var indexChart = Vue.component('index-chart', {
     },
 
     methods: {
-        generateIndexChart: function () {
-            $("#ewi svg").remove();
-            $('#ewi').circliful({
-                // foreground Color
-                foregroundColor: this.graphColor.backgroundColor,
-
-                // background color
-                backgroundColor: "#eee",
-
-                // width of foreground circle border
-                foregroundBorderWidth: 15,
-
-                // width of background circle border
-                backgroundBorderWidth: 15,
-
-                // Size of point circle
-                pointSize: 28.5,
-
-                // font color
-                fontColor: this.graphColor.backgroundColor,
-
-                // from 0 to 100
-                percent: this.index*10,
-
-                // if the circle should be animated initialy
-                animation: 1,
-
-                // from 0 to 100
-                animationStep: 4,
-
-                // top, bottom, left, right or middle
-                iconPosition: 'center',
-
-                // font size of the percentage text
-                percentageTextSize: 22,
-
-                // draws a circle around the main circle
-                targetPercent: 0,
-
-                // font size of the target percentage
-                targetTextSize: 17,
-
-                // font color of the info text
-                textColor: 'white',
-
-                replacePercentageByText: this.stage
-
-            });
-        },
 
         generateDay: function () {
             var vm = this;
@@ -170,13 +118,13 @@ var indexChart = Vue.component('index-chart', {
                     },
                     hAxis : {
                         showTextEvery : 2,
-                        title : "Einbrüche in Prozent",
+                        title : "Prozentuale Verteilung der Einbrüche je Wochentag (insg. 100%)",
                         titleTextStyle: {color: 'white'},
 
                         format : 'decimal',
                         gridlines: {
                             count: 10,
-                            color: 'white'
+                            color: '73bdfe'
                         },
                         baselineColor: 'white',
                         textStyle:{
@@ -187,7 +135,7 @@ var indexChart = Vue.component('index-chart', {
                     animation:{
                         duration: 2000,
                         easing: 'out',
-                        startup: true,
+                        startup: true
                     },
                     backgroundColor: { fill:'transparent' },
                     legend: { position: "none" },
@@ -204,12 +152,12 @@ var indexChart = Vue.component('index-chart', {
 
                 google.visualization.events.addListener(chart, 'select', function () {
                     var selection = chart.getSelection();
+
                     if(selection.length > 0) {
                         vm.dI = selection[0].row;
                         vm.day = calcData.days[vm.dI];
                         vm.customSelection = true;
                         vm.calculate();
-                        vm.generateIndexChart();
                     }
 
                 });
@@ -296,12 +244,12 @@ var indexChart = Vue.component('index-chart', {
                     },
                     hAxis : {
                         showTextEvery : 2,
-                        title : "Einbrüche in Prozent",
+                        title : "Prozentuale Verteilung der Einbrüche je Monat (insg. 100%)",
                         titleTextStyle: {color: 'white'},
                         format : 'decimal',
                         gridlines: {
                             count: 6,
-                            color: 'white'
+                            color: '73bdfe'
                         },
                         baselineColor: 'white',
                         textStyle:{
@@ -332,7 +280,6 @@ var indexChart = Vue.component('index-chart', {
                         vm.month = calcData.months[vm.mI];
                         vm.customSelection = true;
                         vm.calculate();
-                        vm.generateIndexChart();
                     }
 
                 });
@@ -357,12 +304,12 @@ var indexChart = Vue.component('index-chart', {
             if(!this.customSelection) {
                 if (this.time < "21:00") {
                     this.tI = calcData.time[0];
-                    $('.switch input').attr('checked', true)
+                    $(".day").addClass('active');
                     this.indexDay = true
                 }
                 else {
                     this.tI = calcData.time[1];
-                    $('.switch input').attr('checked', false)
+                    $(".night").addClass('active');
                     this.indexDay = false
                 }
             }
@@ -374,46 +321,42 @@ var indexChart = Vue.component('index-chart', {
             if(this.index < 4) {
                 this.graphColor.backgroundColor = "#95a5a6";
                 this.graphColor.color = "white";
-
-                this.stage = "niedrig"
+                this.stage = "Geringes"
             }
             if (this.index > 4 && this.index <7 ){
                 this.graphColor.backgroundColor = "#e67e22";
                 this.graphColor.color = "white";
 
-                this.stage = "mittel"
+                this.stage = "Mittleres"
 
             }
             if (this.index > 7){
                 this.graphColor.backgroundColor = "#c0392b";
                 this.graphColor.color = "white";
-                this.stage = "hoch";
+                this.stage = "Hohes";
 
-                if(this.index == 10){
-                    this.graphColor.backgroundColor = "#c0392b";
-                    this.graphColor.color = "white";
-                    this.stage = "hoch";
-                    this.index = 10
-                }
+
             }
         },
 
         changeTime: function () {
             this.customSelection = true;
+            $(".active").removeClass('active');
 
-            if($(".switch input").is(':checked')){
+            if(this.indexDay == false) {
                 this.tI = calcData.time[0];
-                this.indexDay = true
+                this.indexDay = true;
+                $(".day").addClass('active');
                 this.calculate()
-
             }
             else {
                 this.tI = calcData.time[1];
-                this.indexDay = false
+                this.indexDay = false;
+                $(".night").addClass('active');
                 this.calculate()
 
+
             }
-            this.generateIndexChart();
         }
     },
 
@@ -449,20 +392,43 @@ var index = new Vue({
 
 
             afterLoad: function(anchorLink, index){
+                if(index != 1){
+                    $('#menu ul').addClass('animated fadeOutRight');
+                    $('.toogleNav').fadeIn();
+                }
+                else {
+                    $('#menu ul').removeClass('animated fadeOutRight');
+                    $('#menu ul').addClass('animated fadeInRight');
+
+                    $('.toogleNav').fadeOut();
+
+                }
                 $('.pulse').removeClass('pulse');
 
                 switch(index) {
+                    case 1:
+                        $('.count').each(function () {
+                            $(this).prop('Counter',0).animate({
+                                Counter: $(this).text()
+                            }, {
+                                duration: 2000,
+                                easing: 'swing',
+                                step: function (now) {
+                                    $(this).text(now.toFixed(1)+"%");
+                                }
+                            });
+                        });
+                        break;
                     case 2:
-                        //$('video').get(0).play();
-                        //$('video').get(1).play();
-
 
                         vm.$refs.ichart.generateDay();
                         vm.$refs.ichart.generateMonth();
-                        vm.$refs.ichart.generateIndexChart();
+
+
                         $('#ewi, #index-day, #index-month').removeClass('fadeOut');
 
                         $('#ewi, #index-day, #index-month').addClass('animated fadeIn');
+
                         break;
                     case 3:
                         $('.badges li').addClass('animated pulse');

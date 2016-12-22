@@ -16,17 +16,23 @@ p {
 
 #menu {
   position: fixed;
-  border-bottom: 1px solid #309FFF;
   top: 0;
   left: 0;
   height: 70px;
   z-index: 70;
   width: 100%;
   padding: 0;
-  margin: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center; }
+  margin: 0; }
+  #menu .toogleNav {
+    display: none;
+    position: absolute;
+    right: 10px;
+    top: 0px;
+    width: 60px; }
+  #menu ul {
+    display: flex;
+    align-items: center;
+    justify-content: center; }
   #menu li {
     display: inline;
     margin-right: 20px; }
@@ -41,7 +47,8 @@ p {
   background: white; }
 
 #section0 {
-  background-image: url(../img/burglar.jpg); }
+  background-image: url(../img/burglar5.jpg);
+  background-size: cover; }
 
 .section {
   text-align: center;
@@ -58,11 +65,14 @@ p {
   position: absolute;
   bottom: 0px;
   width: 100%;
-  background-color: #184F7F;
   align-items: center; }
+  .decline .success {
+    background-color: #184F7F; }
+  .decline .fail {
+    background-color: #2B8FE5; }
   .decline div {
     width: 50%;
-    border-right: 1px solid #0C2840; }
+    border-right: 1px solid white; }
     .decline div h4 {
       font-size: 12px;
       font-style: normal;
@@ -71,12 +81,12 @@ p {
       font-weight: 300;
       margin: 0;
       padding: 0;
-      padding-top: 30px; }
+      padding-top: 20px; }
     .decline div h2 {
       font-weight: 300;
-      font-size: 70px;
+      font-size: 30px;
       margin: 0;
-      padding-bottom: 30px; }
+      padding-bottom: 20px; }
   .decline div:last-child {
     border-right: none; }
 
@@ -87,8 +97,7 @@ p {
   font-size: 30px;
   position: relative;
   color: white;
-  margin-bottom: 15px;
-  padding-top: 70px; }
+  margin-bottom: 15px; }
 #section1 h3 {
   font-weight: 900;
   text-transform: uppercase;
@@ -99,15 +108,16 @@ p {
     font-size: 16px; }
 #section1 .layer {
   position: absolute;
-  background-color: rgba(0, 0, 0, 0.7);
   z-index: 4;
   width: 100%;
   height: 100vh;
   left: 0;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  top: 0px; }
+  justify-content: space-around;
+  top: 0px;
+  background-color: #0C2840;
+  transition: background-color 1s; }
 #section1 svg {
   margin-top: -40px; }
 #section1 .tooltip {
@@ -124,85 +134,87 @@ p {
     text-transform: uppercase; }
 #section1 svg g g g g rect {
   stroke-width: 0px;
-  fill: #0C2840; }
-
-#myVideo {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  top: 0;
-  right: 0;
-  width: 100%;
-  height: 100%;
-  background-size: 100% 100%;
-  background-color: black;
-  background-position: center center;
-  background-size: contain;
-  object-fit: cover;
-  z-index: 3; }
+  fill: white; }
 
 #iCharts {
   display: flex;
-  height: 450px;
-  align-items: center;
-  align-content: center;
+  height: 400px;
   justify-content: space-around; }
 
+#ewi img {
+  width: 220px; }
+
 #index-day, #index-month {
-  height: 500px; }
+  height: 450px; }
 
-[data-rel="true"] h1 {
-  color: white; }
+[data-rel="true"] {
+  background-color: #2477BF !important;
+  transition: background-color 1s; }
+  [data-rel="true"] h1 {
+    color: white; }
+  [data-rel="true"] svg g g g g rect {
+    stroke-width: 0px;
+    fill: #0C2840 !important; }
 
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 60px;
-  height: 34px;
-  margin-top: -70px; }
+.graphic {
+  width: 200px;
+  height: 200px;
+  background-size: cover;
+  margin: 0 auto;
+  -webkit-transition: background-image 1.2s ease-in-out;
+  transition: background-image 1.2s ease-in-out; }
 
-.switch input {
-  display: none; }
+[data-rel="Geringes"] .graphic {
+  background-image: url("../img/einbrecher_gering.png"); }
+
+[data-rel="Mittleres"] .graphic {
+  background-image: url("../img/einbrecher_mittel.png"); }
+
+[data-rel="Hohes"] .graphic {
+  background-image: url("../img/einbrecher_hoch.png"); }
+
+#ewi {
+  position: relative; }
 
 .slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  -webkit-transition: .4s;
-  transition: .4s; }
-
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s; }
-
-input:checked + .slider {
-  background-color: #2196F3; }
-
-input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3; }
-
-input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px); }
-
-/* Rounded sliders */
-.slider.round {
-  border-radius: 34px; }
-
-.slider.round:before {
-  border-radius: 50%; }
+  border-radius: 18px;
+  margin: 0 auto;
+  margin-bottom: 40px;
+  display: block;
+  clear: both; }
+  .slider img {
+    width: 25px !important;
+    padding: 8px 20px;
+    border: 1px solid white;
+    opacity: 0.2;
+    transition: opactiy 1s; }
+  .slider img:first-child {
+    -webkit-border-top-left-radius: 20px;
+    -webkit-border-bottom-left-radius: 20px;
+    -moz-border-radius-topleft: 20px;
+    -moz-border-radius-bottomleft: 20px;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    margin-right: -3px; }
+  .slider img:last-child {
+    -webkit-border-top-right-radius: 20px;
+    -webkit-border-bottom-right-radius: 20px;
+    -moz-border-radius-topright: 20px;
+    -moz-border-radius-bottomright: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px; }
+  .slider .active {
+    opacity: 1; }
+  .slider .day:hover {
+    opacity: 1;
+    transition: opacity 1s; }
+  .slider .night:hover {
+    opacity: 1;
+    transition: opacity 1s; }
+  .slider .day.active, .slider .day:hover {
+    background-color: #0C2840; }
+  .slider .night.active, .slider .night:hover {
+    background-color: white; }
 
 .df {
   display: flex;
@@ -210,7 +222,9 @@ input:checked + .slider:before {
   justify-content: space-around; }
   .df div {
     position: relative;
-    width: 440px; }
+    width: 420px; }
+    .df div img {
+      width: 100%; }
 
 .badges {
   position: absolute !important;
