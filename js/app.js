@@ -445,15 +445,17 @@ var index = new Vue({
             navigation: true,
             scrollDelay: 2000,
             navigationPosition: 'right',
-            navigationTooltips: ['Hello','Risiko', 'Einbruchstellen', 'Third'],
+            navigationTooltips: ['Welcome','Risiko', 'Einbruchstellen', 'Third'],
 
 
             afterLoad: function(anchorLink, index){
+                $('.pulse').removeClass('pulse');
 
                 switch(index) {
                     case 2:
                         //$('video').get(0).play();
                         //$('video').get(1).play();
+
 
                         vm.$refs.ichart.generateDay();
                         vm.$refs.ichart.generateMonth();

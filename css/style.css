@@ -53,6 +53,33 @@ p {
     line-height: 1.5;
     margin: 0 auto; }
 
+.decline {
+  display: flex;
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  background-color: #184F7F;
+  align-items: center; }
+  .decline div {
+    width: 50%;
+    border-right: 1px solid #0C2840; }
+    .decline div h4 {
+      font-size: 12px;
+      font-style: normal;
+      display: block;
+      text-transform: uppercase;
+      font-weight: 300;
+      margin: 0;
+      padding: 0;
+      padding-top: 30px; }
+    .decline div h2 {
+      font-weight: 300;
+      font-size: 70px;
+      margin: 0;
+      padding-bottom: 30px; }
+  .decline div:last-child {
+    border-right: none; }
+
 #section1 h1 {
   text-align: center;
   text-transform: uppercase;
