@@ -8,26 +8,33 @@ var calcData = {
 
 };
 
+var descriptions = {
+    low: "Das ist die Beschreibung für niedriges Risiko",
+    middle: "Das ist die Beschreibung für mittleres Risiko",
+    high: "Das ist die Beschreibung für hohes Risiko"
+}
+
 // Components
 var indexChart = Vue.component('index-chart', {
     template: '' +
     '<div class="section" id="section1">' +
-    '<div :data-rel="indexDay"  class="layer">' +
-    '<div>' +
+    '<div :data-rel="indexDay" class="layer">' +
+    '<div class="area-heading">' +
     '   <h1>Einbruchsrisiko</h1>' +
     '   <p>Die Farbskala ist in drei Farben unterteilt. Grau steht für geringes Risiko, Orange steht für mittleres Risiko und Rot für erhötes Risiko. Die Farbe wird anhand der Tageszeit, des Wochentags und des Monats bestimmt.</p>' +
     '</div>' +
-    '<section id="index">'+
+    '<section style="margin-top: -70px;" id="index">'+
     '       <div id="iCharts"> ' +
     '           <div id="index-day"></div>' +
-    '           <div :data-rel="stage"  id="ewi" style="width: 350px">' +
+    '           <div :data-rel="stage"  id="ewi">' +
     '<div v-on:click="changeTime" class="slider">' +
-    '   <img class="day" src="img/daytime-large-day.png">' +
-    '   <img class="night" src="img/daytime-large-night.png">' +
+    '   <img class="day" src="img/daytime-large-day.png" data-tooltip="Tagsüber<br><small>09.00 Uhr - 20.59 Uhr</small>" data-tooltip-position="left middle" >' +
+    '   <img class="night" src="img/daytime-large-night.png" data-tooltip="Nachtsüber<br><small>21.00 Uhr - 08.59 Uhr</small>" data-tooltip-position="right middle" >' +
     '</div>' +
-    '<h3><small>Aktuelle Auswahl:</small><br>{{day}} | {{month}} </h3>' +
+    '<h3><small>Aktuelle Auswahl:</small><br>{{day}} | <small v-show="indexDay"> Tagsüber</small><small v-show="!indexDay"> Nachts</small> | {{month}} </h3>' +
     '<div class="graphic"></div>' +
-    '<span>{{stage}} Einbruchsrisiko</span>' +
+    '<span>{{stage}} Einbruchsrisiko<br></span>' +
+    '<span><small>{{description}}</small></span>' +
     '</div>' +
     '           <div id="index-month"></div>' +
     '       </div>' +
@@ -51,6 +58,8 @@ var indexChart = Vue.component('index-chart', {
             index: "",
 
             stage: "",
+
+            description: "",
 
             indexDay: false,
 
@@ -318,21 +327,24 @@ var indexChart = Vue.component('index-chart', {
             var calc2 = ((calcData.month[11]*calcData.day[4])/100)*calcData.time[0]/100;
             this.index = (100/calc2 * calc1/10).toFixed(1);
 
-            if(this.index < 4) {
+
+            if(this.index < 1) {
                 this.graphColor.backgroundColor = "#95a5a6";
                 this.graphColor.color = "white";
+                this.description = descriptions.low;
                 this.stage = "Geringes"
             }
-            if (this.index > 4 && this.index <7 ){
+            if (this.index > 1 && this.index < 6 ){
                 this.graphColor.backgroundColor = "#e67e22";
                 this.graphColor.color = "white";
-
+                this.description = descriptions.middle;
                 this.stage = "Mittleres"
 
             }
-            if (this.index > 7){
+            if (this.index > 6){
                 this.graphColor.backgroundColor = "#c0392b";
                 this.graphColor.color = "white";
+                this.description = descriptions.high;
                 this.stage = "Hohes";
 
 
@@ -341,7 +353,7 @@ var indexChart = Vue.component('index-chart', {
 
         changeTime: function () {
             this.customSelection = true;
-            $(".active").removeClass('active');
+            $(".slider .active").removeClass('active');
 
             if(this.indexDay == false) {
                 this.tI = calcData.time[0];
@@ -385,29 +397,19 @@ var index = new Vue({
             css3 : true,
             anchors: ['welcome','risiko', 'einbruchstellen', '3rdPage'],
             sectionsColor: ['#aaa', '', '#184F7F', '#0C2840'],
-            navigation: true,
+            navigation: false,
             scrollDelay: 2000,
             navigationPosition: 'right',
             navigationTooltips: ['Welcome','Risiko', 'Einbruchstellen', 'Third'],
 
 
             afterLoad: function(anchorLink, index){
-                if(index != 1){
-                    $('#menu ul').addClass('animated fadeOutRight');
-                    $('.toogleNav').fadeIn();
-                }
-                else {
-                    $('#menu ul').removeClass('animated fadeOutRight');
-                    $('#menu ul').addClass('animated fadeInRight');
 
-                    $('.toogleNav').fadeOut();
-
-                }
                 $('.pulse').removeClass('pulse');
 
                 switch(index) {
                     case 1:
-                        $('.count').each(function () {
+                        $('.decline .count').each(function () {
                             $(this).prop('Counter',0).animate({
                                 Counter: $(this).text()
                             }, {
@@ -432,6 +434,17 @@ var index = new Vue({
                         break;
                     case 3:
                         $('.badges li').addClass('animated pulse');
+                        $('.stellen .count').each(function () {
+                            $(this).prop('Counter',0).animate({
+                                Counter: $(this).text()
+                            }, {
+                                duration: 2000,
+                                easing: 'swing',
+                                step: function (now) {
+                                    $(this).text(now.toFixed(1)+"%");
+                                }
+                            });
+                        });
                         break;
                 }
             }
