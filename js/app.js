@@ -379,14 +379,124 @@ var indexChart = Vue.component('index-chart', {
     }
 });
 
-var einbruchsstellen = Vue.component('einbruchstellen', {
+var sachschaden = Vue.component('sachschaden', {
+
+    template: '<div style="margin-top: -10px;">' +
+    '<div id="sachschaden-chart"></div>' +
+    '</div>',
+
+    data: function () {
+
+        return {
+            message: ""
+        }
+
+    },
+
+    mounted: function () {
+        this.generateChart();
+    },
+
+    methods: {
+        generateChart: function () {
+            var vm = this;
+
+            google.charts.setOnLoadCallback(function () {
+
+                var data = google.visualization.arrayToDataTable([
+                    ['Wert Diebesgut und Sachschaden', 'Wert Diebesgut', '', 'Sachschaden, vollendeter Einbruch', 'Sachschaden, versuchter Einbruch ohne Eindringen', 'Sachschaden, versuchter Einbruch mit Eindringen'],
+                    ['< 50€', 7.1, 0, 7.7, 9.1, 10.9],
+                    ['50 bis 500€', 19.1, 0, 56.5, 73.1, 77.3],
+                    ['501 - 2000€', 27.9, 0, 24.9, 14.9, 9.2],
+                    ['2001 - 5000€', 19.5, 0, 8.4, 2.6, 0.8],
+                    ['5001 - 10000€', 12, 0, 0.8, 0.0, 0.8],
+                    ['> 10000€', 14.4, 0, 1.3, 0.3, 0.8]
+                ]);
+
+
+                var options = {
+
+                    title: '',
+                    titleColor: 'white',
+                    tooltip: { isHtml: true },
+                    height: 450,
+
+
+                    vAxis: {
+                        title:'Prozent',
+                        titleTextStyle: {color: '#FFF'},
+                        textStyle:{
+                            color: '#FFF'
+                        },
+                        gridlines: {
+                            count: 7,
+                            color: '#133f65'
+                        },
+                    },
+                    hAxis : {
+                        showTextEvery : 1,
+                        title : "",
+                        titleTextStyle: {color: 'white'},
+
+                        format : 'decimal',
+                        gridlines: {
+                            count: 7,
+                            color: '#133f65'
+                        },
+                        baselineColor: 'white',
+                        textStyle:{
+                            color: '#FFF'
+                        }
+                    },
+                    colors: ['#e74c3c','','#184F7F', '#309FFF', '#5facee'],
+                    animation:{
+                        duration: 3000,
+                        easing: 'out',
+                        startup: true
+                    },
+                    backgroundColor: { fill:'transparent' },
+                    legend: { position: "top",textStyle: {color: 'white', fontSize: 11}}
+
+
+
+
+
+                };
+
+                var chart = new google.visualization.ColumnChart(document.getElementById('sachschaden-chart'));
+
+
+                google.visualization.events.addListener(chart, 'select', function () {
+
+
+                });
+
+
+
+                chart.draw(data, options);
+               // chart.setSelection([{"row":vm.dI,"column":1}]);
+
+
+                function generateHTML (tag, prozent) {
+                    return '<div class="tooltip"><h5>' + tag + '</h5> <p>'+prozent+ '%</p><div/>' ;
+
+                }
+
+
+
+            });
+
+
+        },
+    }
 
 });
 
 var index = new Vue({
     el: '#fullpage',
     components: {
-        'index-chart': indexChart
+        'index-chart': indexChart,
+        'sachschaden' : sachschaden
     },
     data: {},
 
@@ -395,15 +505,19 @@ var index = new Vue({
 
         $('#fullpage').fullpage({
             css3 : true,
-            anchors: ['welcome','risiko', 'einbruchstellen', '3rdPage'],
-            sectionsColor: ['#aaa', '', '#184F7F', '#0C2840'],
+            anchors: ['welcome','risiko', 'einbruchstellen', 'einbruchswerkzeuge', 'haushalte', 'sachschaden', 'stehlgueter', 'impressum'],
+            sectionsColor: ['#aaa', '', '#184F7F', '#0C2840', '#184F7F', '#0C2840','#184F7F', '#0C2840'],
             navigation: false,
             scrollDelay: 2000,
             navigationPosition: 'right',
-            navigationTooltips: ['Welcome','Risiko', 'Einbruchstellen', 'Third'],
+            navigationTooltips: ['Welcome','Risiko', 'Einbruchstellen', 'Einbruchswerkzeuge', 'Haushalte', 'Sachschaden', 'Stehlgüter', 'Impressum'],
 
 
             afterLoad: function(anchorLink, index){
+
+                var navIndex = index-1;
+                $("#menu li").removeClass("activeNav");
+                $("#menu li:nth-child("+navIndex+")").addClass("activeNav");
 
                 $('.pulse').removeClass('pulse');
 
@@ -413,13 +527,16 @@ var index = new Vue({
                             $(this).prop('Counter',0).animate({
                                 Counter: $(this).text()
                             }, {
-                                duration: 2000,
+                                duration: 1500,
                                 easing: 'swing',
                                 step: function (now) {
                                     $(this).text(now.toFixed(1)+"%");
                                 }
                             });
                         });
+
+                        $('#ewi, #index-day, #index-month').removeClass('fadeIn');
+                        $('#ewi, #index-day, #index-month').addClass('fadeOut');
                         break;
                     case 2:
 
@@ -428,7 +545,6 @@ var index = new Vue({
 
 
                         $('#ewi, #index-day, #index-month').removeClass('fadeOut');
-
                         $('#ewi, #index-day, #index-month').addClass('animated fadeIn');
 
                         break;
@@ -438,17 +554,39 @@ var index = new Vue({
                             $(this).prop('Counter',0).animate({
                                 Counter: $(this).text()
                             }, {
-                                duration: 2000,
+                                duration: 1500,
                                 easing: 'swing',
                                 step: function (now) {
                                     $(this).text(now.toFixed(1)+"%");
                                 }
                             });
                         });
+                        $('#ewi, #index-day, #index-month').removeClass('fadeIn');
+                        $('#ewi, #index-day, #index-month').addClass('fadeOut');
                         break;
+                    case 4:
+                        break;
+                    case 5:
+                        $('#sachschaden-chart').removeClass('fadeIn');
+                        $('#sachschaden-chart').addClass(' fadeOut');
+
+                        break;
+                    case 6:
+                        vm.$refs.sachschadenChart.generateChart();
+                        $('#sachschaden-chart').removeClass('fadeOut');
+                        $('#sachschaden-chart').addClass('animated fadeIn');
+                        break;
+                    case 7:
+                        $('#sachschaden-chart').removeClass('fadeIn');
+                        $('#sachschaden-chart').addClass(' fadeOut');
                 }
             }
         });
+    },
+    methods: {
+        redirect: function () {
+            window.location.assign("/studium/polizei/#einbruchstellen/1");
+        }
     }
 
 

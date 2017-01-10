@@ -68,6 +68,12 @@ a {
     align-items: center;
     justify-content: center;
   }
+  .activeNav {
+    a {
+      color: $brandHover;
+
+    }
+  }
 
 
     li {
@@ -79,7 +85,11 @@ a {
         color: white;
         text-transform: uppercase;
         font-weight: 300;
-        font-size: 17px;
+        font-size: 16px;
+      }
+
+      a:hover {
+        color: $brandHover;
       }
     }
 
@@ -465,6 +475,11 @@ a {
 
 }
 
+
+// SACHSCHÄDEN
+#sachschaden-chart {
+  height: 450px;
+}
 // VUE TRANSITIONS
 .fade-enter-active, .fade-leave-active {
   transition: opacity 2s
