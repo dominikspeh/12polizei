@@ -216,6 +216,7 @@ a {
 
 }
 // INDEX
+
 #section1 {
   h1 {
     text-align: center;
@@ -244,11 +245,24 @@ a {
   svg {
     margin-top: -40px;
   }
+
+  svg g g g g rect {
+    stroke-width:0px; fill:white;
+  }
+}
+
+#iCharts {
+  display: flex;
+  height: 400px;
+  justify-content: space-around;
+
   .tooltip {
     background-color: $brand;
     padding: 10px;
     position: absolute;
     top:-45px;
+    border: 2px solid white;
+    border-radius: 8px;
 
     h5 {
       margin: 0;
@@ -259,15 +273,6 @@ a {
       text-transform: uppercase;
     }
   }
-  svg g g g g rect {
-    stroke-width:0px; fill:white;
-  }
-}
-
-#iCharts {
-  display: flex;
-  height: 400px;
-  justify-content: space-around;
 
 }
 
@@ -341,6 +346,8 @@ a {
     left: 50%;
     margin-left: -60px;
   }
+
+
 
 
  img {
@@ -566,5 +573,77 @@ a {
 }
 #sachschaden-chart {
   height: 450px;
-}
 
+  svg g g g g rect {
+    stroke-width:0px; fill:white;
+  }
+
+  .tooltip {
+    min-width: 200px;
+  }
+  .tooltip {
+    background-color: $brand;
+    padding: 10px;
+    position: absolute;
+    top:-45px;
+    border: 2px solid white;
+    border-radius: 8px;
+
+    h5 {
+      margin: 0;
+      margin-bottom: 5px;
+      padding: 0;
+      font-size: 18px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+  }
+}
+.sliderContainer {
+  display: flex;
+  justify-content: center;
+}
+.werteSlider {
+
+  border-radius: 18px;
+  margin: 10px;
+
+  span {
+    cursor: pointer;
+    padding: 8px 20px;
+    border: 1px solid white;
+    -webkit-border-top-left-radius: 20px;
+    -webkit-border-bottom-left-radius: 20px;
+    -moz-border-radius-topleft: 20px;
+    -moz-border-radius-bottomleft: 20px;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    -webkit-border-top-right-radius: 20px;
+    -webkit-border-bottom-right-radius: 20px;
+    -moz-border-radius-topright: 20px;
+    -moz-border-radius-bottomright: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    cursor: pointer;
+    transition: background-color 1s;
+  }
+
+
+  span.dieb:hover, span.dieb.active {
+    background-color:#e74c3c ;
+  }
+  span.sach:hover, span.sach.active {
+    background-color:$brandHover ;
+  }
+  span.both:hover, span.both.active {
+    background-image: -ms-linear-gradient(left, #E74C3C 30%, #309FFF 100%);
+    background-image: -moz-linear-gradient(left, #E74C3C 30%, #309FFF 100%);
+    background-image: -o-linear-gradient(left, #E74C3C 30%, #309FFF 100%);
+    background-image: -webkit-gradient(linear, left top, right top, color-stop(30, #E74C3C), color-stop(100, #309FFF));
+    background-image: -webkit-linear-gradient(left, #E74C3C 30%, #309FFF 100%);
+    background-image: linear-gradient(to right, #E74C3C 30%, #309FFF 100%);
+    transition: background-image 1s
+  }
+
+
+}

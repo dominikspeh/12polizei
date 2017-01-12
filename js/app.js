@@ -382,6 +382,17 @@ var sachschaden = Vue.component('sachschaden', {
 
     template: '<div style="margin-top: -10px;">' +
     '<div id="sachschaden-chart"></div>' +
+    '<div class="sliderContainer">' +
+    '<div v-on:click="generateChart" class="werteSlider">' +
+    '   <span class="both"   data-tooltip="Wert Diebesgut und Sachschaden einblenden" data-tooltip-position="top center" >Diebesgut und Sachschaden</span>' +
+    '</div>'+
+    '<div v-on:click="generateChartDiebsgut" class="werteSlider">' +
+    '   <span class="dieb" data-tooltip="Wert des Diebesguts einbleden" data-tooltip-position="top center" >Diebesgut</span>' +
+    '</div>'+
+    '<div v-on:click="generateChartSachschaden" class="werteSlider">' +
+    '   <span class="sach" data-tooltip="Wert des Sachschadens einbleden" data-tooltip-position="top center" >Sachschaden</span>' +
+    '</div>'+
+    '</div>' +
     '</div>',
 
     data: function () {
@@ -399,17 +410,113 @@ var sachschaden = Vue.component('sachschaden', {
     methods: {
         generateChart: function () {
             var vm = this;
+            $(".werteSlider span").removeClass("active");
+            $(".both").addClass("active");
 
             google.charts.setOnLoadCallback(function () {
 
                 var data = google.visualization.arrayToDataTable([
-                    ['Wert Diebesgut und Sachschaden', 'Wert Diebesgut', '', 'Sachschaden, vollendeter Einbruch', 'Sachschaden, versuchter Einbruch ohne Eindringen', 'Sachschaden, versuchter Einbruch mit Eindringen'],
-                    ['< 50€', 7.1, 0, 7.7, 9.1, 10.9],
-                    ['50 bis 500€', 19.1, 0, 56.5, 73.1, 77.3],
-                    ['501 - 2000€', 27.9, 0, 24.9, 14.9, 9.2],
-                    ['2001 - 5000€', 19.5, 0, 8.4, 2.6, 0.8],
-                    ['5001 - 10000€', 12, 0, 0.8, 0.0, 0.8],
-                    ['> 10000€', 14.4, 0, 1.3, 0.3, 0.8]
+                    ['Wert Diebesgut und Sachschaden', 'Wert Diebesgut',{'type': 'string', 'role': 'tooltip', 'p': {'html': true}}, '', 'Sachschaden, vollendeter Einbruch',{'type': 'string', 'role': 'tooltip', 'p': {'html': true}}, 'Sachschaden, versuchter Einbruch ohne Eindringen',{'type': 'string', 'role': 'tooltip', 'p': {'html': true}}, 'Sachschaden, versuchter Einbruch mit Eindringen', {'type': 'string', 'role': 'tooltip', 'p': {'html': true}}],
+                    ['< 50€', 7.1 ,generateHTML("< 50€",'Wert Diebesgut',7.1), 0, 7.7,generateHTML("< 50€",'Sachschaden, vollendeter Einbruch',7.7), 9.1,generateHTML("< 50€",'Sachschaden, versuchter Einbruch ohne Eindringen',9.1), 10.9, generateHTML("< 50€",'Sachschaden, versuchter Einbruch mit Eindringen',10.9)],
+                    ['50 - 500€', 19.1, generateHTML("50 - 500€",'Wert Diebesgut',19.1), 0, 56.5,generateHTML("50 - 500€",'Sachschaden, vollendeter Einbruch',56.5), 73.1,generateHTML("50 - 500€",'Sachschaden, versuchter Einbruch ohne Eindringen',73.1), 77.3, generateHTML("50 - 500€",'Sachschaden, versuchter Einbruch mit Eindringen',77.3)],
+                    ['501 - 2000€', 27.9, generateHTML("501 - 2000€",'Wert Diebesgut',27.9), 0, 24.9,generateHTML("501 - 2000€",'Sachschaden, vollendeter Einbruch',24.9), 14.9,generateHTML("501 - 2000€",'Sachschaden, versuchter Einbruch ohne Eindringen',14.9), 9.2, generateHTML("501 - 2000€",'Sachschaden, versuchter Einbruch mit Eindringen',9.2)],
+                    ['2001 - 5000€', 19.5, generateHTML("2001 - 5000€",'Wert Diebesgut',19.5), 0, 8.4,generateHTML("2001 - 5000€",'Sachschaden, vollendeter Einbruch',8.4), 2.6,generateHTML("2001 - 5000€",'Sachschaden, versuchter Einbruch ohne Eindringen',2.6), 0.8, generateHTML("2001 - 5000€",'Sachschaden, versuchter Einbruch mit Eindringen',0.8)],
+                    ['5001 - 10000€', 12, generateHTML("5001 - 10000€",'Wert Diebesgut',12), 0, 0.8,generateHTML("5001 - 10000€",'Sachschaden, vollendeter Einbruch',0.8), 0.0,generateHTML("5001 - 10000€",'Sachschaden, versuchter Einbruch ohne Eindringen',0.0), 0.8, generateHTML("5001 - 10000€",'Sachschaden, versuchter Einbruch mit Eindringen',0.8)],
+                    ['> 10000€', 14.4, generateHTML("> 10000€",'Wert Diebesgut',14.4), 0, 1.3,generateHTML("> 10000€",'Sachschaden, vollendeter Einbruch',1.3), 0.3,generateHTML("> 10000€",'Sachschaden, versuchter Einbruch ohne Eindringen',0.3), 0.8, generateHTML("> 10000€",'Sachschaden, versuchter Einbruch mit Eindringen',0.8)],
+                ]);
+
+
+
+
+
+                var options = {
+
+                    title: '',
+                    titleColor: 'white',
+                    tooltip: { isHtml: true },
+                    height: 450,
+
+
+                    vAxis: {
+                        title:'Prozent',
+                        titleTextStyle: {color: '#FFF'},
+                        textStyle:{
+                            color: '#FFF'
+                        },
+                        gridlines: {
+                            count: 7,
+                            color: '#133f65'
+                        },
+                    },
+                    hAxis : {
+                        showTextEvery : 1,
+                        title : "",
+                        titleTextStyle: {color: 'white'},
+
+                        format : 'decimal',
+                        gridlines: {
+                            count: 7,
+                            color: '#133f65'
+                        },
+                        baselineColor: 'white',
+                        textStyle:{
+                            color: '#FFF'
+                        }
+                    },
+                    colors: ['#e74c3c','','#184F7F', '#309FFF', '#5facee'],
+                    animation:{
+                        duration: 3000,
+                        easing: 'out',
+                        startup: true
+                    },
+                    backgroundColor: { fill:'transparent' },
+                    legend: { position: "top",textStyle: {color: 'white', fontSize: 11}}
+
+
+
+
+
+                };
+
+                var chart = new google.visualization.ColumnChart(document.getElementById('sachschaden-chart'));
+
+
+                google.visualization.events.addListener(chart, 'select', function () {
+
+
+                });
+
+
+
+                chart.draw(data, options);
+
+
+                function generateHTML (legend1, legend2, prozent) {
+                    return '<div class="tooltip"><h5>' + legend1 + '</h5> <p>'+legend2+': <strong>'+prozent+ '%</strong></p><div/>' ;
+
+                }
+
+
+
+            });
+
+
+        },
+
+        generateChartDiebsgut: function () {
+            var vm = this;
+            $(".werteSlider span").removeClass("active");
+            $(".dieb").addClass("active");
+            google.charts.setOnLoadCallback(function () {
+
+                var data = google.visualization.arrayToDataTable([
+                    ['Wert Diebesgut und Sachschaden', 'Wert Diebesgut',{'type': 'string', 'role': 'tooltip', 'p': {'html': true}}],
+                    ['< 50€', 7.1 ,generateHTML("< 50€",'Wert Diebesgut',7.1)],
+                    ['50 - 500€', 19.1, generateHTML("50 - 500€",'Wert Diebesgut',19.1)],
+                    ['501 - 2000€', 27.9, generateHTML("501 - 2000€",'Wert Diebesgut',27.9)],
+                    ['2001 - 5000€', 19.5, generateHTML("2001 - 5000€",'Wert Diebesgut',19.5)],
+                    ['5001 - 10000€', 12, generateHTML("5001 - 10000€",'Wert Diebesgut',12)],
+                    ['> 10000€', 14.4, generateHTML("> 10000€",'Wert Diebesgut',14.4)],
                 ]);
 
 
@@ -473,11 +580,11 @@ var sachschaden = Vue.component('sachschaden', {
 
 
                 chart.draw(data, options);
-               // chart.setSelection([{"row":vm.dI,"column":1}]);
+                // chart.setSelection([{"row":vm.dI,"column":1}]);
 
 
-                function generateHTML (tag, prozent) {
-                    return '<div class="tooltip"><h5>' + tag + '</h5> <p>'+prozent+ '%</p><div/>' ;
+                function generateHTML (legend1, legend2, prozent) {
+                    return '<div class="tooltip"><h5>' + legend1 + '</h5> <p>'+legend2+': <strong>'+prozent+ '%</strong></p><div/>' ;
 
                 }
 
@@ -487,10 +594,102 @@ var sachschaden = Vue.component('sachschaden', {
 
 
         },
+
+        generateChartSachschaden: function () {
+            var vm = this;
+            $(".werteSlider span").removeClass("active");
+            $(".sach").addClass("active");
+            google.charts.setOnLoadCallback(function () {
+
+                var data = google.visualization.arrayToDataTable([
+                    ['Wert Diebesgut und Sachschaden','Sachschaden, vollendeter Einbruch',{'type': 'string', 'role': 'tooltip', 'p': {'html': true}}, 'Sachschaden, versuchter Einbruch ohne Eindringen',{'type': 'string', 'role': 'tooltip', 'p': {'html': true}}, 'Sachschaden, versuchter Einbruch mit Eindringen', {'type': 'string', 'role': 'tooltip', 'p': {'html': true}}],
+                    ['< 50€', 7.7,generateHTML("< 50€",'Sachschaden, vollendeter Einbruch',7.7), 9.1,generateHTML("< 50€",'Sachschaden, versuchter Einbruch ohne Eindringen',9.1), 10.9, generateHTML("< 50€",'Sachschaden, versuchter Einbruch mit Eindringen',10.9)],
+                    ['50 - 500€', 56.5,generateHTML("50 - 500€",'Sachschaden, vollendeter Einbruch',56.5), 73.1,generateHTML("50 - 500€",'Sachschaden, versuchter Einbruch ohne Eindringen',73.1), 77.3, generateHTML("50 - 500€",'Sachschaden, versuchter Einbruch mit Eindringen',77.3)],
+                    ['501 - 2000€', 24.9,generateHTML("501 - 2000€",'Sachschaden, vollendeter Einbruch',24.9), 14.9,generateHTML("501 - 2000€",'Sachschaden, versuchter Einbruch ohne Eindringen',14.9), 9.2, generateHTML("501 - 2000€",'Sachschaden, versuchter Einbruch mit Eindringen',9.2)],
+                    ['2001 - 5000€', 8.4,generateHTML("2001 - 5000€",'Sachschaden, vollendeter Einbruch',8.4), 2.6,generateHTML("2001 - 5000€",'Sachschaden, versuchter Einbruch ohne Eindringen',2.6), 0.8, generateHTML("2001 - 5000€",'Sachschaden, versuchter Einbruch mit Eindringen',0.8)],
+                    ['5001 - 10000€', 0.8,generateHTML("5001 - 10000€",'Sachschaden, vollendeter Einbruch',0.8), 0.0,generateHTML("5001 - 10000€",'Sachschaden, versuchter Einbruch ohne Eindringen',0.0), 0.8, generateHTML("5001 - 10000€",'Sachschaden, versuchter Einbruch mit Eindringen',0.8)],
+                    ['> 10000€', 1.3,generateHTML("> 10000€",'Sachschaden, vollendeter Einbruch',1.3), 0.3,generateHTML("> 10000€",'Sachschaden, versuchter Einbruch ohne Eindringen',0.3), 0.8, generateHTML("> 10000€",'Sachschaden, versuchter Einbruch mit Eindringen',0.8)],
+                ]);
+
+
+                var options = {
+
+                    title: '',
+                    titleColor: 'white',
+                    tooltip: { isHtml: true },
+                    height: 450,
+
+
+                    vAxis: {
+                        title:'Prozent',
+                        titleTextStyle: {color: '#FFF'},
+                        textStyle:{
+                            color: '#FFF'
+                        },
+                        gridlines: {
+                            count: 7,
+                            color: '#133f65'
+                        },
+                    },
+                    hAxis : {
+                        showTextEvery : 1,
+                        title : "",
+                        titleTextStyle: {color: 'white'},
+
+                        format : 'decimal',
+                        gridlines: {
+                            count: 7,
+                            color: '#133f65'
+                        },
+                        baselineColor: 'white',
+                        textStyle:{
+                            color: '#FFF'
+                        }
+                    },
+                    colors: ['#184F7F', '#309FFF', '#5facee'],
+                    animation:{
+                        duration: 3000,
+                        easing: 'out',
+                        startup: true
+                    },
+                    backgroundColor: { fill:'transparent' },
+                    legend: { position: "top",textStyle: {color: 'white', fontSize: 11}}
+
+
+
+
+
+                };
+
+                var chart = new google.visualization.ColumnChart(document.getElementById('sachschaden-chart'));
+
+
+                google.visualization.events.addListener(chart, 'select', function () {
+
+
+                });
+
+
+
+                chart.draw(data, options);
+                // chart.setSelection([{"row":vm.dI,"column":1}]);
+
+
+                function generateHTML (legend1, legend2, prozent) {
+                    return '<div class="tooltip"><h5>' + legend1 + '</h5> <p>'+legend2+': <strong>'+prozent+ '%</strong></p><div/>' ;
+
+                }
+
+
+
+            });
+
+
+        },
+
     }
 
 });
-
 
 var doorChart = Vue.component('door-chart', {
 
