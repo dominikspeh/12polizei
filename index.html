@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="css/tooltip-theme-arrows.css">
 
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/treemap.css" />
+
 </head>
 <body>
 <div id="menu">
@@ -41,7 +43,7 @@
 
 
         <div class="info">
-            <span data-tooltip="61,5% aller untersuchten Einbrüche <br>wurden von der Polizei als vollendet <br>eingestuft. Die restlichen 38,5% <br>gelten als versuchte Taten." data-tooltip-position="left middle" class="infobadge">i</span>
+            <span data-tooltip="61.5% aller untersuchten Einbrüche <br>wurden von der Polizei als vollendet <br>eingestuft. Die restlichen 38.5% <br>gelten als versuchte Taten." data-tooltip-position="left middle" class="infobadge">i</span>
         </div>
 
 
@@ -65,7 +67,7 @@
     <div class="section fh" id="section2">
 
         <div class="slide active ">
-            <span data-tooltip="Die Darstellung des Mehrfamilienhauses <br>auf der <strong>linken Seite</strong> zeigt die Einbruchswahrscheinlichkeit je Stockwerk." data-tooltip-position="left bottom" style="top: 90px; right: 67%;" class="infobadge">i</span>
+            <span data-tooltip="Die Darstellung des Mehrfamilienhauses <br>auf der <strong>linken Seite</strong> zeigt die Einbruchswahrscheinlichkeit je Stockwerk." data-tooltip-position="left bottom" style="top: 90px; right: 51%;" class="infobadge">i</span>
 
 
             <div class="area-heading">
@@ -88,10 +90,6 @@
 
                 <div class="efh stellen">
                     <img style="margin-top: 10px; width: 70%" src="img/EFH.png" alt="Einfamilienhaus">
-                    <div class="badges forward">
-                        <li v-on:click="redirect" data-tooltip="Einbruch an Türen" data-tooltip-position="bottom center" class="count" style="top: 140px; right: 80px;">51.8</li>
-                        <li v-on:click="redirect" data-tooltip="Einbruch an Fenstern" data-tooltip-position="left middle" class="count" style="top: 94px;">48.8</li>
-                    </div>
                     <h4>Einfamilienhaus</h4>
                     <h2 class="count">27.2</h2>
                 </div>
@@ -100,62 +98,69 @@
 
         </div>
         <div class="slide">
-            <span data-tooltip="Die Darstellung des Mehrfamilienhauses <br>auf der <strong>linken Seite</strong> zeigt die Einbruchswahrscheinlichkeit je Stockwerk." data-tooltip-position="left bottom" style="top: 90px; right: 34%;" class="infobadge">i</span>
+            <span data-tooltip="Die Darstellung des Mehrfamilienhauses <br>auf der <strong>linken Seite</strong> zeigt die Einbruchswahrscheinlichkeit je Stockwerk." data-tooltip-position="left bottom" style="top: 90px; right: 1%;" class="infobadge">i</span>
 
                 <div class="area-heading">
                     <h1>Einbruchstellen</h1>
                     <p style="height: 100px">Hier folgt ein Text zu Fenster und Türen</p>
                 </div>
+            <span class="close" v-show="activeElement" v-on:click="close">Schließen</span>
 
-
-                <div class="df afe stellen">
-                    <div class="mfh">
-                        <img src="img/tuere_fenster.png" alt="Türe und Fenster">
-                        <h2 style="float: left;margin-left: 100px;" class="count">51.8</h2>
-                        <h2 style="margin-top: -120px; margin-left: 220px;" class="count">48.2</h2>
-
-
+                <div class="tile" v-show="!activeElement">
+                    <div class="w50" v-on:click="chooseElement('door')">
+                        <img src="img/tuere_mono.png" alt="">
+                        <h1>Türe</h1>
+                        <h2 class="count">51.8</h2>
 
                     </div>
 
+                    <div class="w50" v-on:click="chooseElement('window')">
+                        <img src="img/fenster_mono.png" alt="">
+                        <h1>Fenster</h1>
+                        <h2 class="count">48.2</h2>
 
-                    <div class="efh stellen">
-                        <img src="img/haus_uebersicht_fenster.png" alt="Haus Fenster Übersicht">
-                        <div class="badges">
-                            <li data-tooltip="Fenster im Obergeschoss" data-tooltip-position="right middle" class="count" style="top: 117px;right: 200px;">46.9</li>
-                            <li data-tooltip="Fenstertüren" data-tooltip-position="right middle" class="count" style="top: 190px; left: 110px">48.6</li>
-                            <li data-tooltip="Kellerfenster" data-tooltip-position="right middle" class="count" style="top: 200px; right: 45px;padding: 20px 14px;">4.1</li>
-                            <li  style="top: 270px; left:80px;" class="noneborder">
-                                <ul>
-                                    <li class="count sonstiges" style="padding: 20px 14px;">0.4</li>
-                                    <span>sonstige Fenster</span>
-
-                                </ul>
-                            </li>
-                        </div>
                     </div>
+                </div>
+
+                <div class="tile" v-show="door">
+                        <door-chart></door-chart>
+                </div>
+
+                <div class="tile" v-show="window">
+                    <div class="w50">
+                        <window-chart></window-chart>
+
+                    </div>
+                    <div class="w50">
+                            <img src="img/haus_uebersicht_fenster.png" alt="Haus Fenster Übersicht">
+                            <div class="badges">
+                                <li data-tooltip="Fenster im Obergeschoss" data-tooltip-position="right middle" class="count" style="top: 117px;right: 200px;">46.9</li>
+                                <li data-tooltip="Fenstertüren" data-tooltip-position="right middle" class="count" style="top: 190px; left: 110px">48.6</li>
+                                <li data-tooltip="Kellerfenster" data-tooltip-position="right middle" class="count" style="top: 200px; right: 45px;padding: 20px 14px;">4.1</li>
+                                <li  style="top: 270px; left:80px;" class="noneborder">
+                                    <ul>
+                                        <li class="count sonstiges" style="padding: 20px 14px;">0.4</li>
+                                        <span>sonstige Fenster</span>
+
+                                    </ul>
+                                </li>
+                            </div>
+                    </div>
+                </div>
+
+
 
                 </div>
-            </div>
-
-        <div class="slide">
-            <span data-tooltip="Die Darstellung des Mehrfamilienhauses <br>auf der <strong>linken Seite</strong> zeigt die Einbruchswahrscheinlichkeit je Stockwerk." data-tooltip-position="left bottom" style="top: 90px; right: 1%;" class="infobadge">i</span>
-
-            <div class="area-heading">
-                <h1>Arten des Eindringens</h1>
-                <p style="height: 100px">Hier folgt ein Text zu Fenster und Türen</p>
-            </div>
-
-
-        </div>
+        
 
     </div>
     <div class="section" id="section3">
         <div class="layer">
             <div class="area">
                 <h1>Einbruchswerkzeug</h1>
-                <p>
-                </p>
+                <p>In den meisten Fällen kann das Einbruchswerkzeug überhaupt nicht nachgewiesen werden (77,6%). In 9,4% der Fälle wird sogar überhaupt kein Werkzeug verwendet. In diesen Fällen wurden “günstige Umstände” wie bspw. offenstehende Fenster oder auch körperliche Gewalt genutzt, um sich Zutritt zu verschaffen.</p>
+                <div style="margin-top: 25px;" id="my-treemap"></div>
+
             </div>
         </div>
     </div>
@@ -216,9 +221,8 @@
 </div>
 
 
-
-<script src="node_modules/tether-tooltip/node_modules/tether/dist/js/tether.min.js"></script>
-<script src="node_modules/tether-tooltip/node_modules/tether-drop/dist/js/drop.min.js"></script>
+<script src="node_modules/tether/dist/js/tether.min.js"></script>
+<script src="node_modules/tether-drop/dist/js/drop.min.js"></script>
 <script src="node_modules/tether-tooltip/dist/js/tooltip.min.js"></script>
 
 <script src="node_modules/vue/dist/vue.min.js"></script>
@@ -247,6 +251,8 @@
 
 
 <script src="js/custom.js"></script>
+<script src="js/jquery-treemap.js"></script>
+<script src="js/treemap-data.js"></script>
 
 </body>
 </html>

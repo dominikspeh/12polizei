@@ -19,9 +19,10 @@ var indexChart = Vue.component('index-chart', {
     template: '' +
     '<div class="section" id="section1">' +
     '<div :data-rel="indexDay" class="layer">' +
+    '<span data-tooltip="Anhand von Tageszeit, Wochentag und Monat <br>wird das Risiko eines Einbruchs errechnet. <br>Die Risikoskala ist in drei Stufen unterteilt. <br>Geringes (grau), mittleres (orange) und <br>erhöhtes (rot) Einbruchsrisko." data-tooltip-position="left middle" style="top: 90px; right: 1%;" class="infobadge">i</span>' +
     '<div class="area-heading">' +
     '   <h1>Einbruchsrisiko</h1>' +
-    '   <p>Die Farbskala ist in drei Farben unterteilt. Grau steht für geringes Risiko, Orange steht für mittleres Risiko und Rot für erhötes Risiko. Die Farbe wird anhand der Tageszeit, des Wochentags und des Monats bestimmt.</p>' +
+    '   <p></p>' +
     '</div>' +
     '<section style="margin-top: -70px;" id="index">'+
     '       <div id="iCharts"> ' +
@@ -107,7 +108,6 @@ var indexChart = Vue.component('index-chart', {
                     [{v:"Sa",f:"Sa"},calcData.day[5], generateHTML(calcData.days[5],calcData.day[5])],
 
                     [{v:"So",f:"So"},calcData.day[6], generateHTML(calcData.days[6],calcData.day[6])],
-
 
                 ]);
 
@@ -271,10 +271,6 @@ var indexChart = Vue.component('index-chart', {
 
 
                 var chart = new google.visualization.BarChart(document.getElementById('index-month'));
-
-
-
-
 
                 chart.draw(data, options);
                 chart.setSelection([{"row":vm.mI,"column":1}]);
@@ -492,13 +488,106 @@ var sachschaden = Vue.component('sachschaden', {
 
 });
 
+
+var doorChart = Vue.component('door-chart', {
+
+    template: '<div id="door-chart"></div>',
+
+    data: function () {
+
+        return {
+        }
+
+    },
+
+    mounted: function () {
+        this.generateChart();
+    },
+
+    methods: {
+        generateChart: function () {
+            var vm = this;
+            google.charts.load('current', {packages: ['corechart', 'bar']});
+            google.charts.setOnLoadCallback(drawDoorChart);
+
+            function drawDoorChart() {
+                var data = google.visualization.arrayToDataTable([
+                    ['Art', 'Prozent'],
+                    ['Aufhebeln', 67.0],
+                    ['Fenster/Fenstertür war gekippt', 15.1],
+                    ['Glas einschlagen und entriegeln', 13.0],
+                    ['Sonstiges', 3.8],
+                    ['Glas einschlagen und durchsteigen', 3.3],
+                    ['Einsteigen ins offene Fenster', 2.3],
+                    ['Einsteigen in die offene Fenstertür', 1.6],
+                    ['Ohne erkennbare Spuren', 1.5],
+                    ['Rollläden zerstören', 1.1],
+                    ['Rahmen durchbohren', 0.4],
+                    ['Glas schneiden', 0.0]
+                ]);
+
+                var options = {
+                    title: '',
+                    bar: {groupWidth: "90%"},
+                    titleColor: 'white',
+                    width: 700,
+                    height: 350,
+                    tooltip: { isHtml: true },
+
+                    colors: ['#2B8FE5'],
+                    animation:{
+                        duration: 2000,
+                        easing: 'out',
+                        startup: true,
+                    },
+                    bars: 'horizontal',
+                    backgroundColor: { fill:'transparent' },
+                    legend: { position: "none" },
+                    vAxis: {
+                        textStyle:{
+                            color: '#FFF'
+                        }
+                    },
+                    hAxis : {
+                        showTextEvery : 2,
+                        title : "Prozentuale Verteilung der Einbrüche je Monat (insg. 100%)",
+                        titleTextStyle: {color: 'white'},
+                        format : 'decimal',
+                        gridlines: {
+                            count: 6,
+                            color: '73bdfe'
+                        },
+                        baselineColor: 'white',
+                        textStyle:{
+                            color: '#FFF'
+                        }
+                    }
+                };
+                var chart = new google.visualization.BarChart(document.getElementById('door-chart'));
+                chart.draw(data, options);
+            }
+        }
+    }
+
+});
+
+
 var index = new Vue({
     el: '#fullpage',
     components: {
         'index-chart': indexChart,
-        'sachschaden' : sachschaden
+        'sachschaden' : sachschaden,
+        'doorChart' : doorChart,
     },
-    data: {},
+    data: function () {
+
+        return {
+            activeElement: false,
+            door: false,
+            window: false
+        }
+
+    },
 
     mounted: function () {
         var vm = this;
@@ -584,9 +673,27 @@ var index = new Vue({
         });
     },
     methods: {
-        redirect: function () {
-            window.location.assign("/studium/polizei/#einbruchstellen/1");
+        chooseElement : function (element) {
+            this.activeElement = true;
+
+            if(element == "door"){
+               this.window = false;
+               this.door = true
+            }
+            else {
+               this.door = false;
+               this.window = true;
+            }
+        },
+
+        close: function () {
+            this.activeElement = false;
+            this.door = false;
+            this.window = false;
         }
+
+
+
     }
 
 

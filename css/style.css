@@ -105,12 +105,13 @@ a {
 .info {
   position: absolute;
   bottom: 200px;
-  right: 60px;
+  right: 1%;
   display: flex;
   justify-content: flex-end;
   width: 100%; }
 
 .infobadge {
+  z-index: 99999;
   border: 2px solid white;
   cursor: pointer;
   position: absolute;
@@ -339,6 +340,29 @@ a {
     position: relative;
     left: 68px;
     top: 20px; }
+
+.tile {
+  width: 85%;
+  height: 400px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center; }
+  .tile .w50 {
+    width: 50%;
+    margin: 2px;
+    background-color: #0C2840;
+    padding: 60px 40px;
+    cursor: pointer;
+    transition: 1s background-color; }
+    .tile .w50 img {
+      max-width: 200px; }
+  .tile .w50:hover {
+    background-color: #309FFF; }
+
+.door {
+  width: 100%; }
 
 #sachschaden-chart {
   height: 450px; }
