@@ -315,16 +315,17 @@ a {
   padding-bottom: 20px; }
 
 .badges {
-  position: absolute !important;
-  top: 0;
-  left: 0; }
+  width: 450px;
+  position: relative;
+  margin: 0 auto; }
   .badges li {
     cursor: pointer;
     position: absolute;
     list-style: none;
     background-color: #0C2840;
     border-radius: 50%;
-    padding: 20px 10px;
+    padding: 20px 15px;
+    border: 2px solid white;
     font-size: 14px;
     color: white;
     display: inline-flex;
@@ -333,6 +334,8 @@ a {
     transition: background-color 1s; }
   .badges li:hover {
     background-color: #309FFF; }
+  .badges li.large {
+    padding: 20px 19px; }
   .badges .noneborder {
     background: none !important;
     border: none !important; }
@@ -346,31 +349,69 @@ a {
   height: 400px;
   margin: 0 auto;
   display: flex;
-  align-items: center;
+  align-items: stretch;
   align-content: center;
   justify-content: center; }
   .tile .w50 {
     width: 50%;
-    margin: 2px;
+    position: relative;
     background-color: #0C2840;
     padding: 60px 40px;
     cursor: pointer;
+    margin: 0 1px;
     transition: 1s background-color; }
     .tile .w50 img {
+      max-width: 440px; }
+    .tile .w50 .kachelimg {
       max-width: 200px; }
   .tile .w50:hover {
     background-color: #309FFF; }
+  .tile h3 {
+    /* margin-left: 250px; */
+    position: absolute;
+    font-size: 25px; }
+
+.tile.window {
+  width: 100%; }
+  .tile.window .w50 {
+    overflow: hidden;
+    margin: 0 1px;
+    padding: 20px; }
+  .tile.window .w50:hover {
+    background-color: #0C2840; }
+  .tile.window .bgbrandhover {
+    background-color: #0C2840; }
+  .tile.window .bgbrandhover:hover {
+    background-color: #0C2840; }
+  .tile.window .close:hover {
+    color: #309FFF; }
+
+.close {
+  position: absolute;
+  z-index: 999;
+  right: 2%;
+  cursor: pointer;
+  font-size: 60px;
+  font-weight: 900;
+  top: 170px; }
+
+.close:hover {
+  color: #309FFF; }
 
 .door {
   width: 100%; }
 
+.door, .window {
+  position: relative;
+  background-color: #0C2840; }
+
+.doorChart {
+  padding-left: 120px; }
+
+.windowChart {
+  padding-left: 50px; }
+
 #sachschaden-chart {
   height: 450px; }
-
-.fade-enter-active, .fade-leave-active {
-  transition: opacity 2s; }
-
-.fade-enter, .fade-leave-active {
-  opacity: 0; }
 
 /*# sourceMappingURL=style.css.map */

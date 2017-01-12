@@ -440,10 +440,9 @@ a {
 
 
 .badges {
-  position: absolute!important;
-  top:0;
-  left:0;
-
+  width: 450px;
+  position: relative;
+  margin: 0 auto;
 
   li {
     cursor: pointer;
@@ -451,7 +450,8 @@ a {
     list-style: none;
     background-color: $brand;
     border-radius: 50%;
-    padding: 20px 10px;
+    padding: 20px 15px;
+    border: 2px solid white;
     font-size: 14px;
     color: white;
     display: inline-flex;
@@ -462,6 +462,10 @@ a {
 
   li:hover {
     background-color: $brandHover
+  }
+
+  li.large {
+    padding: 20px 19px;
   }
 
   .noneborder {
@@ -481,39 +485,86 @@ a {
   height: 400px;
   margin: 0 auto;
   display: flex;
-  align-items: center;
+  align-items: stretch;
   align-content: center;
   justify-content: center;
 
   .w50 {
     width: 50%;
-    margin: 2px;
+    position: relative;
     background-color: $brand;
     padding: 60px 40px;
     cursor: pointer;
+    margin: 0 1px;
     transition: 1s background-color;
 
     img {
+      max-width: 440px;
+    }
+
+    .kachelimg {
       max-width: 200px;
     }
   }
   .w50:hover {
     background-color: $brandHover;
   }
+
+  h3 {
+    /* margin-left: 250px; */
+    position: absolute;
+    font-size: 25px;
+  }
+}
+.tile.window {
+  width: 100%;
+
+  .w50 {
+    overflow: hidden;
+    margin: 0 1px;
+    padding: 20px;
+  }
+  .w50:hover {
+    background-color: $brand;
+  }
+  .bgbrandhover{
+    background-color: $brand;
+  }
+  .bgbrandhover:hover{
+    background-color: $brand;
+  }
+  .close:hover {
+    color: $brandHover;
+  }
 }
 
 // SACHSCHÄDEN
+.close {
+  position: absolute;
+  z-index: 999;
+  right: 2%;
+  cursor: pointer;
+  font-size: 60px;
+  font-weight: 900;
+  top: 170px;
+}
+.close:hover {
+  color: $brandHover;
+}
 .door {
   width: 100%;
+}
+.door, .window {
+  position: relative;
+  background-color: $brand;
+}
+.doorChart{
+  padding-left: 120px;
+}
+.windowChart {
+  padding-left: 50px;
 }
 #sachschaden-chart {
   height: 450px;
 }
 
-// VUE TRANSITIONS
-.fade-enter-active, .fade-leave-active {
-  transition: opacity 2s
-}
-.fade-enter, .fade-leave-active {
-  opacity: 0
-}

@@ -98,48 +98,49 @@
 
         </div>
         <div class="slide">
-            <span data-tooltip="Die Darstellung des Mehrfamilienhauses <br>auf der <strong>linken Seite</strong> zeigt die Einbruchswahrscheinlichkeit je Stockwerk." data-tooltip-position="left bottom" style="top: 90px; right: 1%;" class="infobadge">i</span>
-
                 <div class="area-heading">
-                    <h1>Einbruchstellen</h1>
-                    <p style="height: 100px">Hier folgt ein Text zu Fenster und Türen</p>
+                    <h1>{{einbruchsstellenTitle}}</h1>
+                    <p style="height: 80px">{{einbruchsstellenDescription}}
+                    </p>
                 </div>
-            <span class="close" v-show="activeElement" v-on:click="close">Schließen</span>
 
-                <div class="tile" v-show="!activeElement">
+                <div class="tile overview" v-show="!activeElement">
                     <div class="w50" v-on:click="chooseElement('door')">
-                        <img src="img/tuere_mono.png" alt="">
+                        <img class="kachelimg" src="img/tuere_mono.png" alt="">
                         <h1>Türe</h1>
                         <h2 class="count">51.8</h2>
 
                     </div>
 
                     <div class="w50" v-on:click="chooseElement('window')">
-                        <img src="img/fenster_mono.png" alt="">
+                        <img class="kachelimg" src="img/fenster_mono.png" alt="">
                         <h1>Fenster</h1>
                         <h2 class="count">48.2</h2>
 
                     </div>
                 </div>
-
-                <div class="tile" v-show="door">
-                        <door-chart></door-chart>
+                <div class="tile door" v-show="door">
+                    <span class="close" v-show="activeElement" v-on:click="close">x</span>
+                    <door-chart ref="doorChart"></door-chart>
                 </div>
 
-                <div class="tile" v-show="window">
+                <div class="tile window" v-show="window">
+                    <span class="close" v-show="activeElement" v-on:click="close">x</span>
+
                     <div class="w50">
-                        <window-chart></window-chart>
+                        <window-chart ref="windowChart"></window-chart>
 
                     </div>
-                    <div class="w50">
-                            <img src="img/haus_uebersicht_fenster.png" alt="Haus Fenster Übersicht">
+                    <div class="w50 bgbrandhover">
+
                             <div class="badges">
-                                <li data-tooltip="Fenster im Obergeschoss" data-tooltip-position="right middle" class="count" style="top: 117px;right: 200px;">46.9</li>
-                                <li data-tooltip="Fenstertüren" data-tooltip-position="right middle" class="count" style="top: 190px; left: 110px">48.6</li>
-                                <li data-tooltip="Kellerfenster" data-tooltip-position="right middle" class="count" style="top: 200px; right: 45px;padding: 20px 14px;">4.1</li>
-                                <li  style="top: 270px; left:80px;" class="noneborder">
+                                <img src="img/haus_uebersicht_fenster.png" alt="Haus Fenster Übersicht">
+                                <li data-tooltip="Fenster" data-tooltip-position="right middle" class="count" style="top: 120px;right: 210px;">46.9</li>
+                                <li data-tooltip="Fenstertüren" data-tooltip-position="right middle" class="count" style="top: 200px; left: 157px">48.6</li>
+                                <li class="large" data-tooltip="Kellerfenster" data-tooltip-position="left middle" class="count" style="top: 200px; right: 75px">4.1</li>
+                                <li  style="top: 280px; left:80px;" class="noneborder">
                                     <ul>
-                                        <li class="count sonstiges" style="padding: 20px 14px;">0.4</li>
+                                        <li class="count sonstiges large">0.4</li>
                                         <span>sonstige Fenster</span>
 
                                     </ul>

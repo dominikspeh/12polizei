@@ -11,8 +11,11 @@ var calcData = {
 var descriptions = {
     low: "Das ist die Beschreibung für niedriges Risiko",
     middle: "Das ist die Beschreibung für mittleres Risiko",
-    high: "Das ist die Beschreibung für hohes Risiko"
-}
+    high: "Das ist die Beschreibung für hohes Risiko",
+    einbruchsstellenDescription: "Türen (51,8%) und Fenster (48,8%) werden nahezu gleich oft als Einbruchstelle gewählt.",
+    einbruchsstellenFenster: "Bei den Fenstern sind mit 48,6% am häufigsten Fenstertüren (z.B. Terrassentüren) betroffen. Fast genauso häufig wie normale Fenster (46,9%). Kellerfenster (4,1%) sind hingegen nur äußerst selten betroffen.",
+    einbruchsstellenTueren:""
+};
 
 // Components
 var indexChart = Vue.component('index-chart', {
@@ -491,7 +494,8 @@ var sachschaden = Vue.component('sachschaden', {
 
 var doorChart = Vue.component('door-chart', {
 
-    template: '<div id="door-chart"></div>',
+    template: '<div class="doorChart" id="door-chart">' +
+    '</div>',
 
     data: function () {
 
@@ -530,8 +534,9 @@ var doorChart = Vue.component('door-chart', {
                     title: '',
                     bar: {groupWidth: "90%"},
                     titleColor: 'white',
-                    width: 700,
-                    height: 350,
+                    width: 1000,
+                    height: 390,
+                    chartArea :{width:"50%"},
                     tooltip: { isHtml: true },
 
                     colors: ['#2B8FE5'],
@@ -550,7 +555,7 @@ var doorChart = Vue.component('door-chart', {
                     },
                     hAxis : {
                         showTextEvery : 2,
-                        title : "Prozentuale Verteilung der Einbrüche je Monat (insg. 100%)",
+                        title : "Prozentuale Verteilung der Einbruchsarten",
                         titleTextStyle: {color: 'white'},
                         format : 'decimal',
                         gridlines: {
@@ -571,17 +576,103 @@ var doorChart = Vue.component('door-chart', {
 
 });
 
+var windowChart = Vue.component('window-chart', {
 
+    template: '<div class="windowChart" id="window-chart">' +
+    '</div>',
+
+    data: function () {
+
+        return {
+        }
+
+    },
+
+    mounted: function () {
+        this.generateChart();
+    },
+
+    methods: {
+        generateChart: function () {
+            var vm = this;
+            google.charts.load('current', {packages: ['corechart', 'bar']});
+            google.charts.setOnLoadCallback(drawDoorChart);
+
+            function drawDoorChart() {
+                var data = google.visualization.arrayToDataTable([
+                    ['Art', 'Prozent'],
+                    ['Aufhebeln', 67.0],
+                    ['Fenster/Fenstertür war gekippt', 15.1],
+                    ['Glas einschlagen und entriegeln', 13.0],
+                    ['Sonstiges', 3.8],
+                    ['Glas einschlagen und durchsteigen', 3.3],
+                    ['Einsteigen ins offene Fenster', 2.3],
+                    ['Einsteigen in die offene Fenstertür', 1.6],
+                    ['Ohne erkennbare Spuren', 1.5],
+                    ['Rollläden zerstören', 1.1],
+                    ['Rahmen durchbohren', 0.4],
+                    ['Glas schneiden', 0.0]
+                ]);
+
+                var options = {
+                    title: '',
+                    bar: {groupWidth: "90%"},
+                    titleColor: 'white',
+                    width: 630,
+                    height: 390,
+                    chartArea :{width:"30%"},
+                    tooltip: { isHtml: true },
+
+                    colors: ['#2B8FE5'],
+                    animation:{
+                        duration: 2000,
+                        easing: 'out',
+                        startup: true,
+                    },
+                    bars: 'horizontal',
+                    backgroundColor: { fill:'transparent' },
+                    legend: { position: "none" },
+                    vAxis: {
+                        textStyle:{
+                            color: '#FFF'
+                        }
+                    },
+                    hAxis : {
+                        showTextEvery : 2,
+                        title : "Prozentuale Verteilung der Einbruchsarten",
+                        titleTextStyle: {color: 'white'},
+                        format : 'decimal',
+                        gridlines: {
+                            count: 6,
+                            color: '73bdfe'
+                        },
+                        baselineColor: 'white',
+                        textStyle:{
+                            color: '#FFF'
+                        }
+                    }
+                };
+                var chart = new google.visualization.BarChart(document.getElementById('window-chart'));
+                chart.draw(data, options);
+            }
+        }
+    }
+
+});
 var index = new Vue({
     el: '#fullpage',
     components: {
         'index-chart': indexChart,
         'sachschaden' : sachschaden,
         'doorChart' : doorChart,
+        'windowChart' : windowChart,
+
     },
     data: function () {
 
         return {
+            einbruchsstellenTitle: "Einbruchsstellen",
+            einbruchsstellenDescription: descriptions.einbruchsstellenDescription,
             activeElement: false,
             door: false,
             window: false
@@ -674,22 +765,44 @@ var index = new Vue({
     },
     methods: {
         chooseElement : function (element) {
+            $(".window, .door").removeClass("animated zoomIn");
+
+            $(".fp-controlArrow").fadeOut();
             this.activeElement = true;
 
+
             if(element == "door"){
+                $(".door").addClass("animated zoomIn");
                this.window = false;
-               this.door = true
+               this.door = true;
+               this.$refs.doorChart.generateChart();
+               this.einbruchsstellenTitle = "Einbruchsarten bei Türen";
+               this.einbruchsstellenDescription= descriptions.einbruchsstellenTueren
+
+
             }
             else {
-               this.door = false;
-               this.window = true;
+                $(".window").addClass("animated zoomIn");
+                this.door = false;
+                this.window = true;
+                this.$refs.windowChart.generateChart();
+                this.einbruchsstellenTitle = "Einbruchsarten bei Fenstern";
+                this.einbruchsstellenDescription= descriptions.einbruchsstellenFenster
+
+
+
             }
         },
 
         close: function () {
+            $(".overview").addClass("animated rotateInUpRight");
+
             this.activeElement = false;
             this.door = false;
             this.window = false;
+            $(".fp-controlArrow").fadeIn();
+            this.einbruchsstellenTitle = "Einbruchsstellen";
+            this.einbruchsstellenDescription= descriptions.einbruchsstellenDescription
         }
 
 

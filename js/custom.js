@@ -2,8 +2,8 @@ $( document ).ready(function() {
 
 
 $(".fp-controlArrow").click(function () {
-    console.log("aa")
-    $('.stellen .count').each(function () {
+
+    $('.stellen .count, .tile .count').each(function () {
         $(this).prop('Counter',0).animate({
             Counter: $(this).text()
         }, {
