@@ -140,7 +140,7 @@ a {
   width: 100%;
   align-items: center; }
   .decline .success {
-    background-color: #184F7F; }
+    background: #184F7F; }
   .decline .fail {
     background-color: #2B8FE5; }
   .decline div {
@@ -198,7 +198,8 @@ a {
     position: absolute;
     top: -45px;
     border: 2px solid white;
-    border-radius: 8px; }
+    border-radius: 8px;
+    margin-left: -20px; }
     #iCharts .tooltip h5 {
       margin: 0;
       margin-bottom: 5px;
@@ -208,7 +209,7 @@ a {
       text-transform: uppercase; }
 
 #ewi {
-  width: 400px; }
+  width: 450px; }
   #ewi img {
     width: 220px; }
 
@@ -329,7 +330,7 @@ a {
     list-style: none;
     background-color: #0C2840;
     border-radius: 50%;
-    padding: 20px 15px;
+    padding: 20px 10px;
     border: 2px solid white;
     font-size: 14px;
     color: white;
@@ -340,7 +341,7 @@ a {
   .badges li:hover {
     background-color: #309FFF; }
   .badges li.large {
-    padding: 20px 19px; }
+    padding: 20px 13px; }
   .badges .noneborder {
     background: none !important;
     border: none !important; }
@@ -455,7 +456,7 @@ a {
       text-transform: uppercase; }
 
 #sachschaden-chart {
-  height: 450px; }
+  height: 400px; }
   #sachschaden-chart svg g g g g rect {
     stroke-width: 0px;
     fill: white; }
@@ -513,5 +514,35 @@ a {
     background-image: -webkit-linear-gradient(left, #E74C3C 30%, #309FFF 100%);
     background-image: linear-gradient(to right, #E74C3C 30%, #309FFF 100%);
     transition: background-image 1s; }
+
+.haushalte {
+  position: relative;
+  display: inline-block;
+  margin: 0 auto;
+  margin-top: 40px;
+  cursor: pointer; }
+
+.haushalte .icon {
+  height: 250px;
+  width: auto;
+  padding: 0 57px; }
+
+.haushalte .description {
+  padding: 5px 25px;
+  background: #2d7ed7; }
+
+.haushalte .item {
+  float: left;
+  margin: 0 0 0 2px;
+  transition: opacity 1s; }
+
+.haushalte:hover .item:not(:hover) {
+  opacity: 0.2; }
+
+.haushalte .item:first-child {
+  margin: 0; }
+
+.clear {
+  clear: left; }
 
 /*# sourceMappingURL=style.css.map */

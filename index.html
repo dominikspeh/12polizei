@@ -13,6 +13,8 @@
 
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/treemap.css" />
+    <link rel="stylesheet" href="css/bubblechart.css" />
+
 
 </head>
 <body>
@@ -49,11 +51,11 @@
 
         <div class="decline">
 
-            <div class="success">
+            <div style="width: 65%" class="success">
                 <h4>Vollendete Einbrüche</h4>
                 <h2 class="count">61.5</h2>
             </div>
-        <div class="fail">
+        <div style="width: 35%" class="fail">
             <h4>Unvollendete Einbrüche</h4>
             <h2 class="count">38.5</h2>
         </div>
@@ -67,8 +69,8 @@
     <div class="section fh" id="section2">
 
         <div class="slide active ">
-            <span data-tooltip="Die Darstellung des Mehrfamilienhauses <br>auf der <strong>linken Seite</strong> zeigt die Einbruchswahrscheinlichkeit je Stockwerk." data-tooltip-position="left bottom" style="top: 90px; right: 51%;" class="infobadge">i</span>
-
+           <!-- <span data-tooltip="Die Darstellung des Mehrfamilienhauses <br>auf der <strong>linken Seite</strong> zeigt die Einbruchswahrscheinlichkeit je Stockwerk." data-tooltip-position="left bottom" style="top: 90px; right: 51%;" class="infobadge">i</span>
+            !-->
 
             <div class="area-heading">
                 <h1>Einbruchstellen</h1>
@@ -138,12 +140,12 @@
 
                             <div class="badges">
                                 <img src="img/haus_uebersicht_fenster.png" alt="Haus Fenster Übersicht">
-                                <li data-tooltip="Fenster" data-tooltip-position="right middle" class="count" style="top: 120px;right: 210px;">46.9</li>
-                                <li data-tooltip="Fenstertüren" data-tooltip-position="right middle" class="count" style="top: 200px; left: 157px">48.6</li>
-                                <li class="large" data-tooltip="Kellerfenster" data-tooltip-position="left middle" class="count" style="top: 200px; right: 75px">4.1</li>
+                                <li data-tooltip="Fenster" data-tooltip-position="right middle" style="top: 120px;right: 210px;">46.9%</li>
+                                <li data-tooltip="Fenstertüren" data-tooltip-position="right middle"  style="top: 200px; left: 157px">48.6%</li>
+                                <li class="large" data-tooltip="Kellerfenster" data-tooltip-position="left middle"  style="top: 200px; right: 75px">4.1%</li>
                                 <li  style="top: 280px; left:80px;" class="noneborder">
                                     <ul>
-                                        <li class="count sonstiges large">0.4</li>
+                                        <li class="sonstiges large">0.4%</li>
                                         <span>sonstige Fenster</span>
 
                                     </ul>
@@ -174,6 +176,46 @@
                 <h1>Betroffene Haushalte</h1>
                 <p>Fast die Hälfte aller Einbrüche (45,3%) betrifft Ein-Personen-Haushalte. Diese bieten für Einbrecher die besten Voraussetzungen, da hier die geringste Gefahr besteht, entdeckt zu werden, wenn der einzige Bewohner nicht zuhause ist.<br>
                     Paare ohne Kinder (24,1%) bzw. mit Kindern (18,3%) sind seltener betroffen. Alleinerziehende mit Kind (5,5%) und sonstige Mehrpersonen-Haushalte (6,8%) sind nur selten Opfer von Einbrüchen.</p>
+
+                <div class="haushalte">
+                    <div class="item">
+                        <img class="icon" src="img/single.svg">
+                        <div class="description">
+                            <h4>SINGLE</h4>
+                            <h2 class="count">45.3</h2>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <img class="icon" src="img/paar_ohne_kind.svg">
+                        <div class="description">
+                            <h4>PAAR OHNE KIND</h4>
+                            <h2 class="count">24.1</h2>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <img class="icon" src="img/paar_mit_kind.svg">
+                        <div class="description">
+                            <h4>PAAR MIT KIND</h4>
+                            <h2 class="count">18.3</h2>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <img class="icon" src="img/alleinerziehend.svg">
+                        <div class="description">
+                            <h4>ALLEINERZIEHEND</h4>
+                            <h2 class="count">5.5</h2>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <img class="icon" src="img/sonstige.svg">
+                        <div class="description">
+                            <h4>SONSTIGE</h4>
+                            <h2 class="count">6.8</h2>
+                        </div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -198,6 +240,10 @@
                 <p>
                     Zu den beliebtesten Stehlgütern, die bei vollendeten Wohnungseinbrüchen entwendet werden, zählen Schmuck und Uhren (57,5%), Bargeld (48,6%), elektronische Kleingeräte wie Smartphones und Fotoapparate (31,0%).
                 </p>
+
+                <div class="bubblechart">
+                    <div id="gridStehlgueter"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -260,6 +306,8 @@
 <script src="js/custom.js"></script>
 <script src="js/jquery-treemap.js"></script>
 <script src="js/treemap-data.js"></script>
+<script src="js/bubblechart-data.js"></script>
+
 
 </body>
 </html>

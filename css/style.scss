@@ -184,9 +184,10 @@ a {
   align-items: center;
 
   .success {
-    background-color: #184F7F;
+    background: #184F7F;
+   }
 
-  }
+
   .fail {
     background-color: #2B8FE5;
 
@@ -266,6 +267,8 @@ a {
     top:-45px;
     border: 2px solid white;
     border-radius: 8px;
+    margin-left:-20px;
+
 
     h5 {
       margin: 0;
@@ -280,7 +283,7 @@ a {
 }
 
 #ewi {
-  width: 400px;
+  width: 450px;
   img {
     width: 220px
   }
@@ -460,7 +463,7 @@ a {
     list-style: none;
     background-color: $brand;
     border-radius: 50%;
-    padding: 20px 15px;
+    padding: 20px 10px;
     border: 2px solid white;
     font-size: 14px;
     color: white;
@@ -475,7 +478,7 @@ a {
   }
 
   li.large {
-    padding: 20px 19px;
+    padding: 20px 13px;
   }
 
   .noneborder {
@@ -622,7 +625,7 @@ a {
   }
 }
 #sachschaden-chart {
-  height: 450px;
+  height: 400px;
 
   svg g g g g rect {
     stroke-width:0px; fill:white;
@@ -696,4 +699,44 @@ a {
   }
 
 
+}
+
+
+// HAUSHALTE
+.haushalte {
+  position: relative;
+  display: inline-block;
+  margin:0 auto;
+  margin-top: 40px;
+  cursor: pointer;
+}
+
+.haushalte .icon {
+  height:250px;
+  width:auto;
+  padding:0 57px;
+}
+
+.haushalte .description {
+  padding:5px 25px;
+  background:#2d7ed7;
+}
+
+.haushalte .item {
+  float:left;
+  margin:0 0 0 2px;
+  transition: opacity 1s;
+
+}
+
+.haushalte:hover .item:not(:hover) {
+  opacity: 0.2;
+}
+
+.haushalte .item:first-child {
+  margin:0;
+}
+
+.clear {
+  clear:left;
 }

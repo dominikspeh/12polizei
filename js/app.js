@@ -9,9 +9,11 @@ var calcData = {
 };
 
 var descriptions = {
-    low: "Das ist die Beschreibung für niedriges Risiko",
-    middle: "Das ist die Beschreibung für mittleres Risiko",
-    high: "Das ist die Beschreibung für hohes Risiko",
+    low: "Ein niedriges Einbruchsrisiko kann einen Einbruch nicht zu 100% ausschließen. Es bedeutet lediglich, dass die Wahrscheinlichkeit im Vergleich zu anderen Zeitpunkten geringer ist.",
+    middle: "Ein mittleres Einbruchsrisiko bedeutet, dass die Wahrscheinlichkeit eines Einbruches weder ausgeprochen hoch, noch ausgeprochen gering ist.",
+    high: "Ein erhöhtes Einbruchsrisiko bedeutet nicht, dass Sie automatisch Angst vor Einbrüchen haben müssen. Es bedeutet lediglich, dass die Wahrscheinlichkeit im Vergleich zu anderen Zeitpunkt erhöht ist.",
+    dezember: "Wintermonate – allen voran der Dezember – sind für Einbrüche beliebter, da es hier abends früher dunkel und morgens später hell wird",
+    friday: "Allerdings sind die Daten für den Freitag etwas verzerrt. Nichteinordbare Einbrüche am Wochenende werden automatisch dem Freitag zugeschrieben.",
     einbruchsstellenDescription: "Türen (51,8%) und Fenster (48,8%) werden nahezu gleich oft als Einbruchstelle gewählt.",
     einbruchsstellenFenster: "Bei den Fenstern sind mit 48,6% am häufigsten Fenstertüren (z.B. Terrassentüren) betroffen. Fast genauso häufig wie normale Fenster (46,9%). Kellerfenster (4,1%) sind hingegen nur äußerst selten betroffen.",
     einbruchsstellenTueren:""
@@ -27,7 +29,7 @@ var indexChart = Vue.component('index-chart', {
     '   <h1>Einbruchsrisiko</h1>' +
     '   <p></p>' +
     '</div>' +
-    '<section style="margin-top: -70px;" id="index">'+
+    '<section style="margin-top: -180px;" id="index">'+
     '       <div id="iCharts"> ' +
     '           <div id="index-day"></div>' +
     '           <div :data-rel="stage"  id="ewi">' +
@@ -38,7 +40,7 @@ var indexChart = Vue.component('index-chart', {
     '<h3><small>Aktuelle Auswahl:</small><br>{{day}} | <small v-show="indexDay"> Tagsüber</small><small v-show="!indexDay"> Nachts</small> | {{month}} </h3>' +
     '<div class="graphic"></div>' +
     '<span>{{stage}} Einbruchsrisiko<br></span>' +
-    '<span><small>{{description}}</small></span>' +
+    '<span><small>{{description}} {{descriptionMonthSpecial}} {{descriptionDaySpecial}}</small></span>' +
     '</div>' +
     '           <div id="index-month"></div>' +
     '       </div>' +
@@ -64,6 +66,10 @@ var indexChart = Vue.component('index-chart', {
             stage: "",
 
             description: "",
+
+            descriptionMonthSpecial: "",
+
+            descriptionDaySpecial: "",
 
             indexDay: false,
 
@@ -309,6 +315,7 @@ var indexChart = Vue.component('index-chart', {
 
         calculate: function () {
 
+
             if(!this.customSelection) {
                 if (this.time < "21:00") {
                     this.tI = calcData.time[0];
@@ -326,28 +333,77 @@ var indexChart = Vue.component('index-chart', {
             var calc2 = ((calcData.month[11]*calcData.day[4])/100)*calcData.time[0]/100;
             this.index = (100/calc2 * calc1/10).toFixed(1);
 
+            console.log(this.index)
 
-            if(this.index < 1) {
+            if(this.index < 1.1) {
                 this.graphColor.backgroundColor = "#95a5a6";
                 this.graphColor.color = "white";
                 this.description = descriptions.low;
                 this.stage = "Geringes"
+
+                if(this.day == "Freitag"){
+                    this.descriptionDaySpecial = descriptions.friday
+                }
+                if(this.day != "Freitag"){
+                    this.descriptionDaySpecial = ""
+                }
+                if(this.month == "Dezember"){
+                    this.descriptionMonthSpecial = descriptions.dezember
+
+                }
+                if(this.month != "Dezember"){
+                    this.descriptionMonthSpecial = "";
+
+                }
             }
-            if (this.index > 1 && this.index < 6 ){
+
+            if (this.index > 1.1 && this.index < 6 ){
                 this.graphColor.backgroundColor = "#e67e22";
                 this.graphColor.color = "white";
                 this.description = descriptions.middle;
                 this.stage = "Mittleres"
 
+                if(this.day == "Freitag"){
+                    this.descriptionDaySpecial = descriptions.friday
+                }
+                if(this.day != "Freitag"){
+                    this.descriptionDaySpecial = ""
+                }
+                if(this.month == "Dezember"){
+                    this.descriptionMonthSpecial = descriptions.dezember
+
+                }
+                if(this.month != "Dezember"){
+                    this.descriptionMonthSpecial = "";
+
+                }
+
             }
+
             if (this.index > 6){
                 this.graphColor.backgroundColor = "#c0392b";
                 this.graphColor.color = "white";
                 this.description = descriptions.high;
                 this.stage = "Hohes";
 
+                if(this.day == "Freitag"){
+                    this.descriptionDaySpecial = descriptions.friday
+                }
+                if(this.day != "Freitag"){
+                    this.descriptionDaySpecial = ""
+                }
+                if(this.month == "Dezember"){
+                    this.descriptionMonthSpecial = descriptions.dezember
 
+                }
+                if(this.month != "Dezember"){
+                    this.descriptionMonthSpecial = "";
+
+                }
             }
+
+
+
         },
 
         changeTime: function () {
@@ -380,7 +436,7 @@ var indexChart = Vue.component('index-chart', {
 
 var sachschaden = Vue.component('sachschaden', {
 
-    template: '<div style="margin-top: -10px;">' +
+    template: '<div>' +
     '<div id="sachschaden-chart"></div>' +
     '<div class="sliderContainer">' +
     '<div v-on:click="generateChart" class="werteSlider">' +
@@ -404,7 +460,7 @@ var sachschaden = Vue.component('sachschaden', {
     },
 
     mounted: function () {
-        this.generateChart();
+       // this.generateChart();
     },
 
     methods: {
@@ -434,7 +490,6 @@ var sachschaden = Vue.component('sachschaden', {
                     title: '',
                     titleColor: 'white',
                     tooltip: { isHtml: true },
-                    height: 450,
 
 
                     vAxis: {
@@ -525,7 +580,7 @@ var sachschaden = Vue.component('sachschaden', {
                     title: '',
                     titleColor: 'white',
                     tooltip: { isHtml: true },
-                    height: 450,
+                    height: 400,
 
 
                     vAxis: {
@@ -617,7 +672,7 @@ var sachschaden = Vue.component('sachschaden', {
                     title: '',
                     titleColor: 'white',
                     tooltip: { isHtml: true },
-                    height: 450,
+                    height: 400,
 
 
                     vAxis: {
@@ -716,17 +771,16 @@ var doorChart = Vue.component('door-chart', {
             function drawDoorChart() {
                 var data = google.visualization.arrayToDataTable([
                     ['Art', 'Prozent', {'type': 'string', 'role': 'tooltip', 'p': {'html': true}}],
-                    ['Aufhebeln', 67.0, generateHTML("Aufhebeln","67.0")],
-                    ['Fenster/Fenstertür war gekippt', 15.1, generateHTML("Fenster/Fenstertür war gekippt","15.1")],
-                    ['Glas einschlagen und entriegeln', 13.0, generateHTML("Glas einschlagen und entriegeln","13.0")],
-                    ['Sonstiges', 3.8, generateHTML("Sonstiges","3.8")],
-                    ['Glas einschlagen und durchsteigen', 3.3, generateHTML("Glas einschlagen und durchsteigen","3.3")],
-                    ['Einsteigen ins offene Fenster', 2.3, generateHTML("Einsteigen ins offene Fenster","2.3")],
-                    ['Einsteigen in die offene Fenstertür', 1.6, generateHTML("Einsteigen in die offene Fenstertür","1.6")],
-                    ['Ohne erkennbare Spuren', 1.5, generateHTML("Ohne erkennbare Spuren","1.5")],
-                    ['Rollläden zerstören', 1.1, generateHTML("Rollläden zerstören","1.1")],
-                    ['Rahmen durchbohren', 0.4, generateHTML("Rahmen durchbohren","0.4")],
-                    ['Glas schneiden', 0.0, generateHTML("Glas schneiden","0.0")]
+                    ['Aufhebeln', 56.0, generateHTML("Aufhebeln",56.0)],
+                    ['Sonstiges', 14.6, generateHTML('Sonstiges', 14.6)],
+                    ['Mit falschem Schlüssel', 6.9, generateHTML('Mit falschem Schlüssel', 6.9)],
+                    ['Ohne erkennbare Spuren', 6.7, generateHTML('Ohne erkennbare Spuren', 6.7)],
+                    ['Falle/Schnapper drücken', 6.6, generateHTML('Falle/Schnapper drücken', 6.6)],
+                    ['Zylinder abbrechen', 5.7, generateHTML('Zylinder abbrechen', 5.7)],
+                    ['Türblattdurchbruch', 5.3, generateHTML('Türblattdurchbruch', 5.3)],
+                    ['Zylinder (heraus)ziehen, (an)bohren', 4.6, generateHTML('Zylinder (heraus)ziehen, (an)bohren', 4.6)],
+                    ['Glas einschlagen und entriegeln', 1.5, generateHTML('Glas einschlagen und entriegeln', 1.5)],
+                    ['Glas einschlagen und durchsteigen', 1.2, generateHTML('Glas einschlagen und durchsteigen', 1.2)],
                 ]);
 
                 var options = {
@@ -925,18 +979,10 @@ var index = new Vue({
                             });
                         });
 
-                        $('#ewi, #index-day, #index-month').removeClass('fadeIn');
-                        $('#ewi, #index-day, #index-month').addClass('fadeOut');
                         break;
                     case 2:
-
                         vm.$refs.ichart.generateDay();
                         vm.$refs.ichart.generateMonth();
-
-
-                        $('#ewi, #index-day, #index-month').removeClass('fadeOut');
-                        $('#ewi, #index-day, #index-month').addClass('animated fadeIn');
-
                         break;
                     case 3:
                         $('.badges li').addClass('animated pulse');
@@ -957,14 +1003,21 @@ var index = new Vue({
                     case 4:
                         break;
                     case 5:
-                        $('#sachschaden-chart').removeClass('fadeIn');
-                        $('#sachschaden-chart').addClass(' fadeOut');
+                        $('.haushalte .count').each(function () {
+                            $(this).prop('Counter',0).animate({
+                                Counter: $(this).text()
+                            }, {
+                                duration: 1500,
+                                easing: 'swing',
+                                step: function (now) {
+                                    $(this).text(now.toFixed(1)+"%");
+                                }
+                            });
+                        });
 
                         break;
                     case 6:
                         vm.$refs.sachschadenChart.generateChart();
-                        $('#sachschaden-chart').removeClass('fadeOut');
-                        $('#sachschaden-chart').addClass('animated fadeIn');
                         break;
                     case 7:
                         $('#sachschaden-chart').removeClass('fadeIn');
@@ -1005,7 +1058,7 @@ var index = new Vue({
         },
 
         close: function () {
-            $(".overview").addClass("animated rotateInUpRight");
+            $(".overview").addClass("animated zoomInUp");
 
             this.activeElement = false;
             this.door = false;
