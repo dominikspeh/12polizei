@@ -358,6 +358,14 @@ a {
   align-items: stretch;
   align-content: center;
   justify-content: center; }
+  .tile h1 {
+    font-size: 12px;
+    font-weight: 300;
+    margin-bottom: 0; }
+  .tile h2 {
+    font-size: 30px;
+    font-weight: 300;
+    margin-top: 0; }
   .tile .w50 {
     width: 50%;
     position: relative;
@@ -369,7 +377,7 @@ a {
     .tile .w50 img {
       max-width: 440px; }
     .tile .w50 .kachelimg {
-      max-width: 200px; }
+      max-width: 270px; }
   .tile .w50:hover {
     background-color: #309FFF; }
   .tile h3 {
@@ -526,6 +534,17 @@ a {
   height: 250px;
   width: auto;
   padding: 0 57px; }
+
+.haushalte h2 {
+  font-size: 30px;
+  margin-top: 0px; }
+
+.haushalte h4 {
+  font-size: 12px;
+  margin-bottom: 0px; }
+
+.haushalte h2, .haushalte h4 {
+  font-weight: 300; }
 
 .haushalte .description {
   padding: 5px 25px;

@@ -2,24 +2,32 @@ $( document ).ready(function() {
 	initTreeData();
 });
 
+function displayTooltip(element) {
+	$(element).hover(
+		function() { $(this).siblings('.element1').mouseenter(); },
+		function() { $(this).siblings('.element1').mouseleave(); }
+	);
+}
 
 function initTreeData() {
-	function tree(label, value) {
+	function tree(label, description, className, value) {
 		this.label = label;
+		this.description = description;
+		this.className = className;
 		this.value = value;
 	}
 	
 	var treeItemList = [];
 
-	treeItemList.push(new tree("Sonstiges", 30.7));
-	treeItemList.push(new tree("Dietrich", 1.3));
-	treeItemList.push(new tree("Hammer", 3.0));
-	treeItemList.push(new tree("Brechstange", 12.7));
-	treeItemList.push(new tree("Meißel", 1.0));
-	treeItemList.push(new tree("EC-Karte", 3.7));
-	treeItemList.push(new tree("Schraubendreher", 42.6));
-	treeItemList.push(new tree("Akkubohrer", 3.0));
-	treeItemList.push(new tree("Gabelschlüssel", 2.3));
+	treeItemList.push(new tree("Sonstiges", "z.B. Gartengeräte, Steine, Drähte", "sonstiges", 30.7));
+	treeItemList.push(new tree("Dietrich", "", "dietrich", 1.3));
+	treeItemList.push(new tree("Hammer", "", "hammer", 3.0));
+	treeItemList.push(new tree("Brechstange", "", "brechstange", 12.7));
+	treeItemList.push(new tree("Meißel", "", "meissel", 1.0));
+	treeItemList.push(new tree("EC-Karte", "", "ec-karte", 3.7));
+	treeItemList.push(new tree("Schraubendreher", "", "schraubendreher", 42.6));
+	treeItemList.push(new tree("Akkubohrer", "", "akkubohrer",3.0));
+	treeItemList.push(new tree("Gabelschlüssel", "", "gabelschluessel", 2.3));
 
 	createTreeMap(treeItemList);
 }

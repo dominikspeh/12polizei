@@ -1,6 +1,5 @@
 $( document ).ready(function() {
 	initBubbleData();
-	initGrid();
 });
 
 
@@ -21,26 +20,18 @@ function initBubbleData() {
 	bubbleItemList.push(new bubble("Alkohol und Zigaretten", 3.5, "alkohol"));
 	bubbleItemList.push(new bubble("Tresor", 3.7, "tresor"));
 	bubbleItemList.push(new bubble("Kraftfahrzeug- schlüssel", 2.8, "kraftfahrzeugschluessel"));
-	bubbleItemList.push(new bubble("Kunstgegenstände", 2.6, "kunstgegenstaende"));
+	bubbleItemList.push(new bubble("Kunstgegen- stände", 2.6, "kunstgegenstaende"));
 	bubbleItemList.push(new bubble("Nahrungsmittel", 2.6, "nahrungsmittel"));
 	bubbleItemList.push(new bubble("Waffen und Munition", 2.6, "waffen"));
 	
 	loadBubbles(bubbleItemList);
 }
 
-function initGrid() {
-	$('.grid').masonry({
-	  // options
-	  itemSelector: '.grid-item',
-	  columnWidth: 200
-	});
-}
 
 function loadBubbles(bubbleItemList) {
-	console.log(bubbleItemList);
 	var countBubble = 0;
 	$.each(bubbleItemList, function(key, value) {
-		countBubble++;console.log(countBubble+'dd');
+		countBubble++;
 		var title = value.title;
 		var percent = value.value;
 		var percentFormated = percent+"%";

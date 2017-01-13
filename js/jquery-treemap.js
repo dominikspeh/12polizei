@@ -103,10 +103,11 @@
                 'font-size': this.startingFontSize + 'px'
             });
 			//
-            var $treeItem = $('<div class="treeItem ' + node.label.toLowerCase() + '"></div>');
+            var $treeItem = $('<div class="treeItem ' + node.className + '"></div>');
             var $turnaround = $('<div class="turnaround"></div>');
 			var smallerSized = '';
 			var distanceTopValue = '';
+			var description = '';
 			if(parseInt($box.width())<120) {
 				iconSet = "width:100%; height:50%; margin-top:10px";
 				valueSet = "width:100%; text-align:center; font-size:14px;";
@@ -123,7 +124,11 @@
 				labelSet = "padding-top:"+ (parseInt($box.height()) / 2-12) +"px; font-size:20px;";
 			}
 			var valueWellFormed =  node.value;
-            var $itemContent = $('<div class="front"><div class="icon" style="' + iconSet + '"></div><div class="value" style="' + valueSet + '">' + valueWellFormed + '%</div><div style="clear:left"></div></div><div class="back" style="-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;' + labelSet + '">' + node.label + '</div>');
+			if(node.description=='')
+				description = '';
+			else
+				description = '<div class="description">'+ node.description + '</div>';
+            var $itemContent = $('<div class="front"><div class="icon" style="' + iconSet + '"></div><div class="value" style="' + valueSet + '">' + valueWellFormed + '%</div><div style="clear:left"></div></div><div class="back" style="-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;' + labelSet + '">' + node.label + description + '</div>');
             $treeItem.append($turnaround);
             $turnaround.append($itemContent);
             $box.append($treeItem);

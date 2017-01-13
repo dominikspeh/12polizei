@@ -34,6 +34,11 @@
 	opacity: 1;
 }
 
+.treeItem .back .description {
+	margin-top:10px;
+	font-size:12px;
+}
+
 .value {
 	float:left;
 	width:40%;
@@ -81,8 +86,8 @@
 	background-image: url(../img/hammer.svg);
 }
 
-.treeItem.gabelschlüssel .front .icon {
-	background-image: url(../img/gabelschlüssel.svg);
+.treeItem.gabelschluessel .front .icon {
+	background-image: url(../img/gabelschluessel.svg);
 }
 
 .treeItem.dietrich .front .icon {
@@ -93,8 +98,8 @@
 	background-image: url(../img/stemmeisen.svg);
 }
 
-.treeItem.meißel .front .icon {
-	background-image: url(../img/meißel.svg);
+.treeItem.meissel .front .icon {
+	background-image: url(../img/meissel.svg);
 }
 
 .turnaround {
