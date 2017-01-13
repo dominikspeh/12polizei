@@ -567,9 +567,56 @@ a {
 }
 .doorChart{
   padding-left: 120px;
+  svg g g g g rect {
+    stroke-width:0px; fill:white;
+  }
+  .tooltip {
+    min-width: 200px;
+  }
+  .tooltip {
+    background-color: $brand;
+    padding: 10px;
+    position: absolute;
+    top:-45px;
+    border: 2px solid white;
+    border-radius: 8px;
+
+    h5 {
+      margin: 0;
+      margin-bottom: 5px;
+      padding: 0;
+      font-size: 18px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+  }
 }
 .windowChart {
   padding-left: 50px;
+
+  svg g g g g rect {
+    stroke-width:0px; fill:white;
+  }
+  .tooltip {
+    min-width: 200px;
+  }
+  .tooltip {
+    background-color: $brand;
+    padding: 10px;
+    position: absolute;
+    top:-45px;
+    border: 2px solid white;
+    border-radius: 8px;
+
+    h5 {
+      margin: 0;
+      margin-bottom: 5px;
+      padding: 0;
+      font-size: 18px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+  }
 }
 #sachschaden-chart {
   height: 450px;

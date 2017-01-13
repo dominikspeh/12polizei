@@ -715,18 +715,18 @@ var doorChart = Vue.component('door-chart', {
 
             function drawDoorChart() {
                 var data = google.visualization.arrayToDataTable([
-                    ['Art', 'Prozent'],
-                    ['Aufhebeln', 67.0],
-                    ['Fenster/Fenstertür war gekippt', 15.1],
-                    ['Glas einschlagen und entriegeln', 13.0],
-                    ['Sonstiges', 3.8],
-                    ['Glas einschlagen und durchsteigen', 3.3],
-                    ['Einsteigen ins offene Fenster', 2.3],
-                    ['Einsteigen in die offene Fenstertür', 1.6],
-                    ['Ohne erkennbare Spuren', 1.5],
-                    ['Rollläden zerstören', 1.1],
-                    ['Rahmen durchbohren', 0.4],
-                    ['Glas schneiden', 0.0]
+                    ['Art', 'Prozent', {'type': 'string', 'role': 'tooltip', 'p': {'html': true}}],
+                    ['Aufhebeln', 67.0, generateHTML("Aufhebeln","67.0")],
+                    ['Fenster/Fenstertür war gekippt', 15.1, generateHTML("Fenster/Fenstertür war gekippt","15.1")],
+                    ['Glas einschlagen und entriegeln', 13.0, generateHTML("Glas einschlagen und entriegeln","13.0")],
+                    ['Sonstiges', 3.8, generateHTML("Sonstiges","3.8")],
+                    ['Glas einschlagen und durchsteigen', 3.3, generateHTML("Glas einschlagen und durchsteigen","3.3")],
+                    ['Einsteigen ins offene Fenster', 2.3, generateHTML("Einsteigen ins offene Fenster","2.3")],
+                    ['Einsteigen in die offene Fenstertür', 1.6, generateHTML("Einsteigen in die offene Fenstertür","1.6")],
+                    ['Ohne erkennbare Spuren', 1.5, generateHTML("Ohne erkennbare Spuren","1.5")],
+                    ['Rollläden zerstören', 1.1, generateHTML("Rollläden zerstören","1.1")],
+                    ['Rahmen durchbohren', 0.4, generateHTML("Rahmen durchbohren","0.4")],
+                    ['Glas schneiden', 0.0, generateHTML("Glas schneiden","0.0")]
                 ]);
 
                 var options = {
@@ -769,6 +769,11 @@ var doorChart = Vue.component('door-chart', {
                 };
                 var chart = new google.visualization.BarChart(document.getElementById('door-chart'));
                 chart.draw(data, options);
+
+                function generateHTML (legend1, prozent) {
+                    return '<div class="tooltip"><h5>' + legend1 + '</h5> <p>'+prozent+ '%</strong></p><div/>' ;
+
+                }
             }
         }
     }
@@ -799,18 +804,18 @@ var windowChart = Vue.component('window-chart', {
 
             function drawDoorChart() {
                 var data = google.visualization.arrayToDataTable([
-                    ['Art', 'Prozent'],
-                    ['Aufhebeln', 67.0],
-                    ['Fenster/Fenstertür war gekippt', 15.1],
-                    ['Glas einschlagen und entriegeln', 13.0],
-                    ['Sonstiges', 3.8],
-                    ['Glas einschlagen und durchsteigen', 3.3],
-                    ['Einsteigen ins offene Fenster', 2.3],
-                    ['Einsteigen in die offene Fenstertür', 1.6],
-                    ['Ohne erkennbare Spuren', 1.5],
-                    ['Rollläden zerstören', 1.1],
-                    ['Rahmen durchbohren', 0.4],
-                    ['Glas schneiden', 0.0]
+                    ['Art', 'Prozent',{'type': 'string', 'role': 'tooltip', 'p': {'html': true}}],
+                    ['Aufhebeln', 67.0, generateHTML('Aufhebeln', 67.0)],
+                    ['Fenster/Fenstertür war gekippt', 15.1, generateHTML('Fenster/Fenstertür war gekippt', 15.1)],
+                    ['Glas einschlagen und entriegeln', 13.0, generateHTML('Glas einschlagen und entriegeln', 13.0)],
+                    ['Sonstiges', 3.8, generateHTML('Sonstiges', 3.8)],
+                    ['Glas einschlagen und durchsteigen', 3.3, generateHTML('Glas einschlagen und durchsteigen', 3.3)],
+                    ['Einsteigen ins offene Fenster', 2.3, generateHTML('Einsteigen ins offene Fenster', 2.3)],
+                    ['Einsteigen in die offene Fenstertür', 1.6, generateHTML('Einsteigen in die offene Fenstertür', 1.6)],
+                    ['Ohne erkennbare Spuren', 1.5, generateHTML('Ohne erkennbare Spuren', 1.5)],
+                    ['Rollläden zerstören', 1.1, generateHTML('Rollläden zerstören', 1.1)],
+                    ['Rahmen durchbohren', 0.4, generateHTML('Rahmen durchbohren', 0.4)],
+                    ['Glas schneiden', 0.0, generateHTML('Glas schneiden', 0.0)]
                 ]);
 
                 var options = {
@@ -853,6 +858,12 @@ var windowChart = Vue.component('window-chart', {
                 };
                 var chart = new google.visualization.BarChart(document.getElementById('window-chart'));
                 chart.draw(data, options);
+
+                function generateHTML (legend1, prozent) {
+                    return '<div class="tooltip"><h5>' + legend1 + '</h5> <p>'+prozent+ '%</p><div/>' ;
+
+                }
+
             }
         }
     }
