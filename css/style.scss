@@ -64,6 +64,9 @@ a {
   }
 
   ul {
+    border-bottom: 1px solid #FFF;
+    padding-bottom: 7px;
+    margin-top: 0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -85,7 +88,7 @@ a {
         color: white;
         text-transform: uppercase;
         font-weight: 300;
-        font-size: 16px;
+        font-size: 15px;
       }
 
       a:hover {
