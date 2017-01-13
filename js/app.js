@@ -15,7 +15,7 @@ var descriptions = {
     dezember: "Wintermonate – allen voran der Dezember – sind für Einbrüche beliebter, da es hier abends früher dunkel und morgens später hell wird",
     friday: "Allerdings sind die Daten für den Freitag etwas verzerrt. Nichteinordbare Einbrüche am Wochenende werden automatisch dem Freitag zugeschrieben.",
     einbruchsstellenDescription: "Türen (51,8%) und Fenster (48,8%) werden nahezu gleich oft als Einbruchstelle gewählt.",
-    einbruchsstellenFenster: "Bei den Fenstern sind mit 48,6% am häufigsten Fenstertüren (z.B. Terrassentüren) betroffen. Fast genauso häufig wie normale Fenster (46,9%). Kellerfenster (4,1%) sind hingegen nur äußerst selten betroffen.",
+    einbruchsstellenFenster: "Bei den Fenstern sind mit 48,6% am häufigsten Fenstertüren (z.B. Terrassentüren) betroffen.  Fast genauso häufig wie normale Fenster (46,9%).  Kellerfenster (4,1%) sind hingegen nur äußerst selten betroffen.",
     einbruchsstellenTueren:""
 };
 
@@ -80,6 +80,7 @@ var indexChart = Vue.component('index-chart', {
 
         }
     },
+
     mounted: function () {
         this.calculate();
 
@@ -187,7 +188,7 @@ var indexChart = Vue.component('index-chart', {
 
 
                 function generateHTML (tag, prozent) {
-                    return '<div class="tooltip"><h5>' + tag + '</h5> <p>'+prozent+ '%</p><div/>' ;
+                    return '<div class="tooltip"><p>' + tag + '</p> <h5>'+prozent+ '<sup>%</sup></h5><div/>' ;
 
                 }
 
@@ -302,7 +303,7 @@ var indexChart = Vue.component('index-chart', {
                 });
 
                 function generateHTML (monat, prozent) {
-                    return '<div class="tooltip"><h5>' + monat + '</h5> <p>'+prozent+ '%</p><div/>' ;
+                    return '<div class="tooltip"><p>' + monat + '</p> <h5>'+prozent+ '<sup>%</sup></h5><div/>' ;
 
                 }
 
@@ -439,14 +440,9 @@ var sachschaden = Vue.component('sachschaden', {
     template: '<div>' +
     '<div id="sachschaden-chart"></div>' +
     '<div class="sliderContainer">' +
-    '<div v-on:click="generateChart" class="werteSlider">' +
-    '   <span class="both"   data-tooltip="Wert Diebesgut und Sachschaden einblenden" data-tooltip-position="top center" >Diebesgut und Sachschaden</span>' +
-    '</div>'+
-    '<div v-on:click="generateChartDiebsgut" class="werteSlider">' +
-    '   <span class="dieb" data-tooltip="Wert des Diebesguts einbleden" data-tooltip-position="top center" >Diebesgut</span>' +
-    '</div>'+
-    '<div v-on:click="generateChartSachschaden" class="werteSlider">' +
-    '   <span class="sach" data-tooltip="Wert des Sachschadens einbleden" data-tooltip-position="top center" >Sachschaden</span>' +
+    '<div class="werteSlider">' +
+    '   <span v-on:click="changeChartDieb" class="dieb"  data-tooltip-position="top center" >Diebesgut</span>' +
+    '   <span v-on:click="changeChartSach"  class="sach" data-tooltip="Wert des Sachschadens einbleden" data-tooltip-position="top center" >Sachschaden</span>' +
     '</div>'+
     '</div>' +
     '</div>',
@@ -464,26 +460,64 @@ var sachschaden = Vue.component('sachschaden', {
     },
 
     methods: {
+        clearChart: function () {
+            this.generateEmptyChart()
+        },
+        changeChartDieb: function () {
+            if($(".dieb").hasClass('active')){
+                if($(".sach").hasClass('active')){
+                    this.generateChartSachschaden();
+                }
+                else {
+                    // HIDE
+                    this.clearChart();
+                }
+
+            }
+            else {
+                if($(".sach").hasClass('active')){
+                    this.generateChart();
+                }
+                else {
+                    this.generateChartDiebsgut();
+                }
+            }
+        },
+        changeChartSach: function () {
+            if($(".sach").hasClass('active')){
+                if($(".dieb").hasClass('active')){
+                    this.generateChartDiebsgut();
+                }
+                else {
+                    // HIDE
+                    this.clearChart();
+                }
+
+            }
+            else {
+                if($(".dieb").hasClass('active')){
+                    this.generateChart();
+                }
+                else {
+                    this.generateChartSachschaden();
+                }
+            }
+        },
         generateChart: function () {
             var vm = this;
-            $(".werteSlider span").removeClass("active");
-            $(".both").addClass("active");
+            $(".sach, .dieb").addClass("active")
 
             google.charts.setOnLoadCallback(function () {
 
                 var data = google.visualization.arrayToDataTable([
                     ['Wert Diebesgut und Sachschaden', 'Wert Diebesgut',{'type': 'string', 'role': 'tooltip', 'p': {'html': true}}, '', 'Sachschaden, vollendeter Einbruch',{'type': 'string', 'role': 'tooltip', 'p': {'html': true}}, 'Sachschaden, versuchter Einbruch ohne Eindringen',{'type': 'string', 'role': 'tooltip', 'p': {'html': true}}, 'Sachschaden, versuchter Einbruch mit Eindringen', {'type': 'string', 'role': 'tooltip', 'p': {'html': true}}],
-                    ['< 50€', 7.1 ,generateHTML("< 50€",'Wert Diebesgut',7.1), 0, 7.7,generateHTML("< 50€",'Sachschaden, vollendeter Einbruch',7.7), 9.1,generateHTML("< 50€",'Sachschaden, versuchter Einbruch ohne Eindringen',9.1), 10.9, generateHTML("< 50€",'Sachschaden, versuchter Einbruch mit Eindringen',10.9)],
-                    ['50 - 500€', 19.1, generateHTML("50 - 500€",'Wert Diebesgut',19.1), 0, 56.5,generateHTML("50 - 500€",'Sachschaden, vollendeter Einbruch',56.5), 73.1,generateHTML("50 - 500€",'Sachschaden, versuchter Einbruch ohne Eindringen',73.1), 77.3, generateHTML("50 - 500€",'Sachschaden, versuchter Einbruch mit Eindringen',77.3)],
-                    ['501 - 2000€', 27.9, generateHTML("501 - 2000€",'Wert Diebesgut',27.9), 0, 24.9,generateHTML("501 - 2000€",'Sachschaden, vollendeter Einbruch',24.9), 14.9,generateHTML("501 - 2000€",'Sachschaden, versuchter Einbruch ohne Eindringen',14.9), 9.2, generateHTML("501 - 2000€",'Sachschaden, versuchter Einbruch mit Eindringen',9.2)],
-                    ['2001 - 5000€', 19.5, generateHTML("2001 - 5000€",'Wert Diebesgut',19.5), 0, 8.4,generateHTML("2001 - 5000€",'Sachschaden, vollendeter Einbruch',8.4), 2.6,generateHTML("2001 - 5000€",'Sachschaden, versuchter Einbruch ohne Eindringen',2.6), 0.8, generateHTML("2001 - 5000€",'Sachschaden, versuchter Einbruch mit Eindringen',0.8)],
-                    ['5001 - 10000€', 12, generateHTML("5001 - 10000€",'Wert Diebesgut',12), 0, 0.8,generateHTML("5001 - 10000€",'Sachschaden, vollendeter Einbruch',0.8), 0.0,generateHTML("5001 - 10000€",'Sachschaden, versuchter Einbruch ohne Eindringen',0.0), 0.8, generateHTML("5001 - 10000€",'Sachschaden, versuchter Einbruch mit Eindringen',0.8)],
-                    ['> 10000€', 14.4, generateHTML("> 10000€",'Wert Diebesgut',14.4), 0, 1.3,generateHTML("> 10000€",'Sachschaden, vollendeter Einbruch',1.3), 0.3,generateHTML("> 10000€",'Sachschaden, versuchter Einbruch ohne Eindringen',0.3), 0.8, generateHTML("> 10000€",'Sachschaden, versuchter Einbruch mit Eindringen',0.8)],
+                    ['< 50 €', 7.1 ,generateHTML("< 50€",'Wert Diebesgut',7.1), 0, 7.7,generateHTML("< 50€",'Sachschaden, vollendeter Einbruch',7.7), 9.1,generateHTML("< 50€",'Sachschaden, versuchter Einbruch ohne Eindringen',9.1), 10.9, generateHTML("< 50€",'Sachschaden, versuchter Einbruch mit Eindringen',10.9)],
+                    ['50 - 500 €', 19.1, generateHTML("50 - 500€",'Wert Diebesgut',19.1), 0, 56.5,generateHTML("50 - 500€",'Sachschaden, vollendeter Einbruch',56.5), 73.1,generateHTML("50 - 500€",'Sachschaden, versuchter Einbruch ohne Eindringen',73.1), 77.3, generateHTML("50 - 500€",'Sachschaden, versuchter Einbruch mit Eindringen',77.3)],
+                    ['501 - 2.000 €', 27.9, generateHTML("501 - 2.000€",'Wert Diebesgut',27.9), 0, 24.9,generateHTML("501 - 2.000€",'Sachschaden, vollendeter Einbruch',24.9), 14.9,generateHTML("501 - 2.000€",'Sachschaden, versuchter Einbruch ohne Eindringen',14.9), 9.2, generateHTML("501 - 2.000€",'Sachschaden, versuchter Einbruch mit Eindringen',9.2)],
+                    ['2.001 - 5.000 €', 19.5, generateHTML("2.001 - 5.000€",'Wert Diebesgut',19.5), 0, 8.4,generateHTML("2.001 - 5.000€",'Sachschaden, vollendeter Einbruch',8.4), 2.6,generateHTML("2.001 - 5.000€",'Sachschaden, versuchter Einbruch ohne Eindringen',2.6), 0.8, generateHTML("2.001 - 5.000€",'Sachschaden, versuchter Einbruch mit Eindringen',0.8)],
+                    ['5.001 - 10.000 €', 12, generateHTML("5.001 - 10.000€",'Wert Diebesgut',12), 0, 0.8,generateHTML("5.001 - 10.000€",'Sachschaden, vollendeter Einbruch',0.8), 0.0,generateHTML("5.001 - 10.000€",'Sachschaden, versuchter Einbruch ohne Eindringen',0.0), 0.8, generateHTML("5.001 - 10.000€",'Sachschaden, versuchter Einbruch mit Eindringen',0.8)],
+                    ['> 10.000 €', 14.4, generateHTML("> 10.000€",'Wert Diebesgut',14.4), 0, 1.3,generateHTML("> 10.000€",'Sachschaden, vollendeter Einbruch',1.3), 0.3,generateHTML("> 10.000€",'Sachschaden, versuchter Einbruch ohne Eindringen',0.3), 0.8, generateHTML("> 10.000€",'Sachschaden, versuchter Einbruch mit Eindringen',0.8)],
                 ]);
-
-
-
-
 
                 var options = {
 
@@ -527,27 +561,14 @@ var sachschaden = Vue.component('sachschaden', {
                     backgroundColor: { fill:'transparent' },
                     legend: { position: "top",textStyle: {color: 'white', fontSize: 11}}
 
-
-
-
-
                 };
 
                 var chart = new google.visualization.ColumnChart(document.getElementById('sachschaden-chart'));
 
-
-                google.visualization.events.addListener(chart, 'select', function () {
-
-
-                });
-
-
-
                 chart.draw(data, options);
 
-
                 function generateHTML (legend1, legend2, prozent) {
-                    return '<div class="tooltip"><h5>' + legend1 + '</h5> <p>'+legend2+': <strong>'+prozent+ '%</strong></p><div/>' ;
+                    return '<div class="tooltip"><p><small>' + legend1 + '</small><br>' + legend2 + '<br></p> <h5>'+prozent+ '<sup>%</sup></strong></h5><div/>' ;
 
                 }
 
@@ -568,10 +589,10 @@ var sachschaden = Vue.component('sachschaden', {
                     ['Wert Diebesgut und Sachschaden', 'Wert Diebesgut',{'type': 'string', 'role': 'tooltip', 'p': {'html': true}}],
                     ['< 50€', 7.1 ,generateHTML("< 50€",'Wert Diebesgut',7.1)],
                     ['50 - 500€', 19.1, generateHTML("50 - 500€",'Wert Diebesgut',19.1)],
-                    ['501 - 2000€', 27.9, generateHTML("501 - 2000€",'Wert Diebesgut',27.9)],
-                    ['2001 - 5000€', 19.5, generateHTML("2001 - 5000€",'Wert Diebesgut',19.5)],
-                    ['5001 - 10000€', 12, generateHTML("5001 - 10000€",'Wert Diebesgut',12)],
-                    ['> 10000€', 14.4, generateHTML("> 10000€",'Wert Diebesgut',14.4)],
+                    ['501 - 2.000€', 27.9, generateHTML("501 - 2.000€",'Wert Diebesgut',27.9)],
+                    ['2.001 - 5.000€', 19.5, generateHTML("2.001 - 5.000€",'Wert Diebesgut',19.5)],
+                    ['5.001 - 10.000€', 12, generateHTML("5.001 - 10.000€",'Wert Diebesgut',12)],
+                    ['> 10.000€', 14.4, generateHTML("> 10.000€",'Wert Diebesgut',14.4)],
                 ]);
 
 
@@ -639,7 +660,7 @@ var sachschaden = Vue.component('sachschaden', {
 
 
                 function generateHTML (legend1, legend2, prozent) {
-                    return '<div class="tooltip"><h5>' + legend1 + '</h5> <p>'+legend2+': <strong>'+prozent+ '%</strong></p><div/>' ;
+                    return '<div class="tooltip"><p><small>' + legend1 + '</small><br>' + legend2 + '<br></p> <h5>'+prozent+ '<sup>%</sup></strong></h5><div/>' ;
 
                 }
 
@@ -660,10 +681,10 @@ var sachschaden = Vue.component('sachschaden', {
                     ['Wert Diebesgut und Sachschaden','Sachschaden, vollendeter Einbruch',{'type': 'string', 'role': 'tooltip', 'p': {'html': true}}, 'Sachschaden, versuchter Einbruch ohne Eindringen',{'type': 'string', 'role': 'tooltip', 'p': {'html': true}}, 'Sachschaden, versuchter Einbruch mit Eindringen', {'type': 'string', 'role': 'tooltip', 'p': {'html': true}}],
                     ['< 50€', 7.7,generateHTML("< 50€",'Sachschaden, vollendeter Einbruch',7.7), 9.1,generateHTML("< 50€",'Sachschaden, versuchter Einbruch ohne Eindringen',9.1), 10.9, generateHTML("< 50€",'Sachschaden, versuchter Einbruch mit Eindringen',10.9)],
                     ['50 - 500€', 56.5,generateHTML("50 - 500€",'Sachschaden, vollendeter Einbruch',56.5), 73.1,generateHTML("50 - 500€",'Sachschaden, versuchter Einbruch ohne Eindringen',73.1), 77.3, generateHTML("50 - 500€",'Sachschaden, versuchter Einbruch mit Eindringen',77.3)],
-                    ['501 - 2000€', 24.9,generateHTML("501 - 2000€",'Sachschaden, vollendeter Einbruch',24.9), 14.9,generateHTML("501 - 2000€",'Sachschaden, versuchter Einbruch ohne Eindringen',14.9), 9.2, generateHTML("501 - 2000€",'Sachschaden, versuchter Einbruch mit Eindringen',9.2)],
-                    ['2001 - 5000€', 8.4,generateHTML("2001 - 5000€",'Sachschaden, vollendeter Einbruch',8.4), 2.6,generateHTML("2001 - 5000€",'Sachschaden, versuchter Einbruch ohne Eindringen',2.6), 0.8, generateHTML("2001 - 5000€",'Sachschaden, versuchter Einbruch mit Eindringen',0.8)],
-                    ['5001 - 10000€', 0.8,generateHTML("5001 - 10000€",'Sachschaden, vollendeter Einbruch',0.8), 0.0,generateHTML("5001 - 10000€",'Sachschaden, versuchter Einbruch ohne Eindringen',0.0), 0.8, generateHTML("5001 - 10000€",'Sachschaden, versuchter Einbruch mit Eindringen',0.8)],
-                    ['> 10000€', 1.3,generateHTML("> 10000€",'Sachschaden, vollendeter Einbruch',1.3), 0.3,generateHTML("> 10000€",'Sachschaden, versuchter Einbruch ohne Eindringen',0.3), 0.8, generateHTML("> 10000€",'Sachschaden, versuchter Einbruch mit Eindringen',0.8)],
+                    ['501 - 2.000€', 24.9,generateHTML("501 - 2.000€",'Sachschaden, vollendeter Einbruch',24.9), 14.9,generateHTML("501 - 2.000€",'Sachschaden, versuchter Einbruch ohne Eindringen',14.9), 9.2, generateHTML("501 - 2.000€",'Sachschaden, versuchter Einbruch mit Eindringen',9.2)],
+                    ['2.001 - 5.000€', 8.4,generateHTML("2.001 - 5.000€",'Sachschaden, vollendeter Einbruch',8.4), 2.6,generateHTML("2.001 - 5.000€",'Sachschaden, versuchter Einbruch ohne Eindringen',2.6), 0.8, generateHTML("2.001 - 5.000€",'Sachschaden, versuchter Einbruch mit Eindringen',0.8)],
+                    ['5.001 - 10.000€', 0.8,generateHTML("5.001 - 10.000€",'Sachschaden, vollendeter Einbruch',0.8), 0.0,generateHTML("5.001 - 10.000€",'Sachschaden, versuchter Einbruch ohne Eindringen',0.0), 0.8, generateHTML("5.001 - 10.000€",'Sachschaden, versuchter Einbruch mit Eindringen',0.8)],
+                    ['> 10.000€', 1.3,generateHTML("> 10.000€",'Sachschaden, vollendeter Einbruch',1.3), 0.3,generateHTML("> 10.000€",'Sachschaden, versuchter Einbruch ohne Eindringen',0.3), 0.8, generateHTML("> 10.000€",'Sachschaden, versuchter Einbruch mit Eindringen',0.8)],
                 ]);
 
 
@@ -731,7 +752,7 @@ var sachschaden = Vue.component('sachschaden', {
 
 
                 function generateHTML (legend1, legend2, prozent) {
-                    return '<div class="tooltip"><h5>' + legend1 + '</h5> <p>'+legend2+': <strong>'+prozent+ '%</strong></p><div/>' ;
+                    return '<div class="tooltip"><p><small>' + legend1 + '</small><br>' + legend2 + '<br></p> <h5>'+prozent+ '<sup>%</sup></strong></h5><div/>' ;
 
                 }
 
@@ -741,6 +762,94 @@ var sachschaden = Vue.component('sachschaden', {
 
 
         },
+
+        generateEmptyChart: function () {
+            var vm = this;
+            $(".werteSlider span").removeClass("active");
+
+            google.charts.setOnLoadCallback(function () {
+
+                var data = google.visualization.arrayToDataTable([
+                    ['Wert Diebesgut und Sachschaden', ''],
+                    ['< 50€', 0],
+                    ['50 - 500€', 0],
+                    ['501 - 2.000€', 0],
+                    ['2.001 - 5.000€', 0],
+                    ['5.001 - 10.000€', 0],
+                    ['> 10.000€', 0],
+                ]);
+
+
+                var options = {
+
+                    title: '',
+                    titleColor: 'white',
+                    tooltip: { isHtml: true },
+                    height: 400,
+
+
+                    vAxis: {
+                        title:'Prozent',
+                        titleTextStyle: {color: '#FFF'},
+                        textStyle:{
+                            color: '#FFF'
+                        },
+                        gridlines: {
+                            count: 7,
+                            color: '#133f65'
+                        },
+                    },
+                    hAxis : {
+                        showTextEvery : 1,
+                        title : "",
+                        titleTextStyle: {color: 'white'},
+
+                        format : 'decimal',
+                        gridlines: {
+                            count: 7,
+                            color: '#133f65'
+                        },
+                        baselineColor: 'white',
+                        textStyle:{
+                            color: '#FFF'
+                        }
+                    },
+                    colors: ['#e74c3c','','#184F7F', '#309FFF', '#5facee'],
+                    backgroundColor: { fill:'transparent' },
+                    legend: { position: "none",textStyle: {color: 'white', fontSize: 11}}
+
+
+
+
+
+                };
+
+                var chart = new google.visualization.ColumnChart(document.getElementById('sachschaden-chart'));
+
+
+                google.visualization.events.addListener(chart, 'select', function () {
+
+
+                });
+
+
+
+                chart.draw(data, options);
+                // chart.setSelection([{"row":vm.dI,"column":1}]);
+
+
+                function generateHTML (legend1, legend2, prozent) {
+                    return '<div class="tooltip"><p><small>' + legend1 + '</small><br>' + legend2 + '<br></p> <h5>'+prozent+ '<sup>%</sup></strong></h5><div/>' ;
+
+                }
+
+
+
+            });
+
+
+        },
+
 
     }
 
@@ -825,7 +934,7 @@ var doorChart = Vue.component('door-chart', {
                 chart.draw(data, options);
 
                 function generateHTML (legend1, prozent) {
-                    return '<div class="tooltip"><h5>' + legend1 + '</h5> <p>'+prozent+ '%</strong></p><div/>' ;
+                    return '<div class="tooltip"><p>' + legend1 + '</p> <h5>'+prozent+ '<sup>%</sup></strong></h5><div/>' ;
 
                 }
             }
@@ -914,7 +1023,7 @@ var windowChart = Vue.component('window-chart', {
                 chart.draw(data, options);
 
                 function generateHTML (legend1, prozent) {
-                    return '<div class="tooltip"><h5>' + legend1 + '</h5> <p>'+prozent+ '%</p><div/>' ;
+                    return '<div class="tooltip"><p>' + legend1 + '</p> <h5>'+prozent+ '<sup>%</sup></strong></h5><div/>' ;
 
                 }
 
@@ -923,6 +1032,7 @@ var windowChart = Vue.component('window-chart', {
     }
 
 });
+
 var index = new Vue({
     el: '#fullpage',
     components: {
@@ -974,7 +1084,7 @@ var index = new Vue({
                                 duration: 1500,
                                 easing: 'swing',
                                 step: function (now) {
-                                    $(this).text(now.toFixed(1)+"%");
+                                    $(this).html(now.toFixed(1)+"<sup>%</sup>");
                                 }
                             });
                         });
@@ -993,7 +1103,7 @@ var index = new Vue({
                                 duration: 1500,
                                 easing: 'swing',
                                 step: function (now) {
-                                    $(this).text(now.toFixed(1)+"%");
+                                    $(this).html(now.toFixed(1)+"<sup>%</sup>");
                                 }
                             });
                         });
@@ -1010,7 +1120,7 @@ var index = new Vue({
                                 duration: 1500,
                                 easing: 'swing',
                                 step: function (now) {
-                                    $(this).text(now.toFixed(1)+"%");
+                                    $(this).html(now.toFixed(1)+"<sup>%</sup>");
                                 }
                             });
                         });

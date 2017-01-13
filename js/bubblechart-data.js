@@ -34,7 +34,7 @@ function loadBubbles(bubbleItemList) {
 		countBubble++;
 		var title = value.title;
 		var percent = value.value;
-		var percentFormated = percent+"%";
+		var percentFormated = percent+"<sup>%</sup>";
 		if(percent<=2)
 			var boxSize = parseInt(percent+90);
 		else if(percent<5)

@@ -2,6 +2,12 @@ body {
   font-family: 'Lato', sans-serif;
   background-color: black; }
 
+sup {
+  font-size: 12px;
+  left: 3px;
+  margin-right: 5px;
+  position: relative; }
+
 .layer {
   position: absolute;
   z-index: 4;
@@ -21,7 +27,9 @@ h1 {
   text-transform: uppercase;
   font-weight: 300;
   font-size: 40px;
-  color: white; }
+  color: white;
+  margin-top: 0;
+  word-spacing: 8px; }
 
 p {
   color: white;
@@ -202,9 +210,9 @@ a {
     margin-left: -20px; }
     #iCharts .tooltip h5 {
       margin: 0;
-      margin-bottom: 5px;
+      margin-top: 5px;
       padding: 0;
-      font-size: 18px;
+      font-size: 17px;
       font-weight: 900;
       text-transform: uppercase; }
 
@@ -435,9 +443,9 @@ a {
     border-radius: 8px; }
     .doorChart .tooltip h5 {
       margin: 0;
-      margin-bottom: 5px;
+      margin-top: 5px;
       padding: 0;
-      font-size: 18px;
+      font-size: 17px;
       font-weight: 900;
       text-transform: uppercase; }
 
@@ -457,9 +465,9 @@ a {
     border-radius: 8px; }
     .windowChart .tooltip h5 {
       margin: 0;
-      margin-bottom: 5px;
+      margin-top: 5px;
       padding: 0;
-      font-size: 18px;
+      font-size: 17px;
       font-weight: 900;
       text-transform: uppercase; }
 
@@ -479,9 +487,9 @@ a {
     border-radius: 8px; }
     #sachschaden-chart .tooltip h5 {
       margin: 0;
-      margin-bottom: 5px;
+      margin-top: 5px;
       padding: 0;
-      font-size: 18px;
+      font-size: 17px;
       font-weight: 900;
       text-transform: uppercase; }
 
@@ -493,35 +501,29 @@ a {
   border-radius: 18px;
   margin: 10px; }
   .werteSlider span {
-    cursor: pointer;
+    width: 25px !important;
     padding: 8px 20px;
     border: 1px solid white;
+    cursor: pointer; }
+  .werteSlider span:first-child {
     -webkit-border-top-left-radius: 20px;
     -webkit-border-bottom-left-radius: 20px;
     -moz-border-radius-topleft: 20px;
     -moz-border-radius-bottomleft: 20px;
     border-top-left-radius: 20px;
     border-bottom-left-radius: 20px;
+    margin-right: -3px; }
+  .werteSlider span:last-child {
     -webkit-border-top-right-radius: 20px;
     -webkit-border-bottom-right-radius: 20px;
     -moz-border-radius-topright: 20px;
     -moz-border-radius-bottomright: 20px;
     border-top-right-radius: 20px;
-    border-bottom-right-radius: 20px;
-    cursor: pointer;
-    transition: background-color 1s; }
+    border-bottom-right-radius: 20px; }
   .werteSlider span.dieb:hover, .werteSlider span.dieb.active {
     background-color: #e74c3c; }
   .werteSlider span.sach:hover, .werteSlider span.sach.active {
     background-color: #309FFF; }
-  .werteSlider span.both:hover, .werteSlider span.both.active {
-    background-image: -ms-linear-gradient(left, #E74C3C 30%, #309FFF 100%);
-    background-image: -moz-linear-gradient(left, #E74C3C 30%, #309FFF 100%);
-    background-image: -o-linear-gradient(left, #E74C3C 30%, #309FFF 100%);
-    background-image: -webkit-gradient(linear, left top, right top, color-stop(30, #E74C3C), color-stop(100, #309FFF));
-    background-image: -webkit-linear-gradient(left, #E74C3C 30%, #309FFF 100%);
-    background-image: linear-gradient(to right, #E74C3C 30%, #309FFF 100%);
-    transition: background-image 1s; }
 
 .haushalte {
   position: relative;

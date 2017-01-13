@@ -128,7 +128,7 @@
 				description = '';
 			else
 				description = '<div class="description">'+ node.description + '</div>';
-            var $itemContent = $('<div class="front"><div class="icon" style="' + iconSet + '"></div><div class="value" style="' + valueSet + '">' + valueWellFormed + '%</div><div style="clear:left"></div></div><div class="back" style="-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;' + labelSet + '">' + node.label + description + '</div>');
+            var $itemContent = $('<div class="front"><div class="icon" style="' + iconSet + '"></div><div class="value" style="' + valueSet + '">' + valueWellFormed + '<sup>%</sup></div><div style="clear:left"></div></div><div class="back" style="-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;' + labelSet + '">' + node.label + description + '</div>');
             $treeItem.append($turnaround);
             $turnaround.append($itemContent);
             $box.append($treeItem);
