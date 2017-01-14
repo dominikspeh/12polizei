@@ -150,7 +150,7 @@ var indexChart = Vue.component('index-chart', {
                             color: '#FFF'
                         }
                     },
-                    colors: ['#2B8FE5'],
+                    colors: ['#1a62a2'],
                     animation:{
                         duration: 2000,
                         easing: 'out',
@@ -247,7 +247,7 @@ var indexChart = Vue.component('index-chart', {
                     titleColor: 'white',
                     tooltip: { isHtml: true },
 
-                    colors: ['#2B8FE5'],
+                    colors: ['#1a62a2'],
                     animation:{
                         duration: 2000,
                         easing: 'out',

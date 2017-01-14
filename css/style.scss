@@ -258,7 +258,7 @@ a {
   }
 
   svg g g g g rect {
-    stroke-width:0px; fill:white;
+    stroke-width:0px; fill: $brandHover;
   }
 }
 
@@ -409,7 +409,7 @@ a {
     background-color: $brand;
   }
   .night.active, .night:hover {
-    background-color: white;
+    background-color: $brandHover;
 
   }
 
@@ -686,6 +686,7 @@ a {
     padding: 8px 20px;
     border: 1px solid white;
     cursor: pointer;
+
   }
   span:first-child {
     -webkit-border-top-left-radius: 20px;
