@@ -917,7 +917,7 @@ var doorChart = Vue.component('door-chart', {
                     },
                     hAxis : {
                         showTextEvery : 2,
-                        title : "Prozentuale Verteilung der Einbruchsarten",
+                        title : "Art des Eindringens (in %; Fälle mit Eindringen durch Türen, Mehrfachnennung möglich)",
                         titleTextStyle: {color: 'white'},
                         format : 'decimal',
                         gridlines: {
@@ -1006,7 +1006,7 @@ var windowChart = Vue.component('window-chart', {
                     },
                     hAxis : {
                         showTextEvery : 2,
-                        title : "Prozentuale Verteilung der Einbruchsarten",
+                        title : "Art des Eindringens (in %; Fälle mit Eindringen durch Fenster, Mehrfachnennung möglich)",
                         titleTextStyle: {color: 'white'},
                         format : 'decimal',
                         gridlines: {

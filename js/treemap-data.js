@@ -22,7 +22,7 @@ function initTreeData() {
 	treeItemList.push(new tree("Sonstiges", "z.B. Gartengeräte, Steine, Drähte", "sonstiges", 30.7));
 	treeItemList.push(new tree("Dietrich", "", "dietrich", 1.3));
 	treeItemList.push(new tree("Hammer", "", "hammer", 3.0));
-	treeItemList.push(new tree("Brechstange", "", "brechstange", 12.7));
+	treeItemList.push(new tree("Brechstange", "Kuhfuß, Nageleisen, Stemmeisen", "brechstange", 12.7));
 	treeItemList.push(new tree("Meißel", "", "meissel", 1.0));
 	treeItemList.push(new tree("EC-Karte", "", "ec-karte", 3.7));
 	treeItemList.push(new tree("Schraubendreher", "", "schraubendreher", 42.6));

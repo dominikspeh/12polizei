@@ -14,7 +14,7 @@ function initBubbleData() {
 
 	bubbleItemList.push(new bubble("Bargeld, Münzen und Wertpapiere", 57.8, "bargeld"));
 	bubbleItemList.push(new bubble("Schmuck und Uhren", 57.5, "schmuck"))
-	bubbleItemList.push(new bubble("Elektrogeräte", 56.6, "elektrogeraete"));
+	bubbleItemList.push(new bubble("Elektrogeräte", 76.6, "elektrogeraete"));
 	bubbleItemList.push(new bubble("Ausweispapiere, EC- und Kreditkarte", 11.7, "ausweispapiere"));;
 	bubbleItemList.push(new bubble("Kleidung", 10.0, "kleidung"));
 	bubbleItemList.push(new bubble("Alkohol und Zigaretten", 3.5, "alkohol"));
