@@ -31,7 +31,110 @@
 
     </ul>
 </div>
+<!-- template for the modal component -->
+<script type="text/x-template" id="modal-template">
+    <transition name="modal">
+        <div class="modal-mask">
+            <div class="modal-wrapper">
+                <div class="modal-container">
 
+                    <div class="modal-header">
+                        <slot name="header">
+                            <h1>Bilderverweise</h1>
+                        </slot>
+                    </div>
+
+                    <div class="modal-body">
+                        <span style="color: white" class="close" @click="$emit('close')">x</span>
+                        <slot name="body">
+                            <strong>Headerbild:</strong><br><br>
+                            Christian Delbert/stock.adobe.com
+                            <br><br>
+                            <strong>Einbruchswerkzeug</strong><br><br>
+
+                            Schraubendreher:<br>
+                            <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+                            <br>
+                            Fragezeichen:<br>
+                            <div>Icons made by <a href="http://www.flaticon.com/authors/eleonor-wang" title="Eleonor Wang">Eleonor Wang</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+                            <br>
+                            Brechstange:<br>
+                            <div>Icons made by <a href="http://www.flaticon.com/authors/dimi-kazak" title="Dimi Kazak">Dimi Kazak</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+                            <br>
+                            EC-Karte:<br>
+                            <div>Icons made by <a href="http://www.flaticon.com/authors/dave-gandy" title="Dave Gandy">Dave Gandy</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+                            <br>
+                            Akkubohrer:<br>
+                            <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+                            <br>
+                            Hammer:<br>
+                            <div>Icons made by <a href="http://www.flaticon.com/authors/scott-de-jonge" title="Scott de Jonge">Scott de Jonge</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+                            <br>
+                            Gabelschlüssel:<br>
+                            <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+                            <br>
+                            Dietrich:<br>
+                            <div>Icons made by <a href="http://www.flaticon.com/authors/madebyoliver" title="Madebyoliver">Madebyoliver</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+                            <br>
+                            Meißel:<br>
+                            <div>Icons made by <a href="http://www.flaticon.com/authors/madebyoliver" title="Madebyoliver">Madebyoliver</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+                            <br><br>
+                            <strong>Betroffene Haushalte</strong><br>
+                            <br>
+                            Personengruppen:<br>
+                            <a href="http://www.freepik.com/free-photos-vectors/menschen">Menschen vektor designed by Freepik</a>
+                            <br><br>
+                            <strong>Häufige Stehleiter</strong><br>
+                            <br>
+                            Bargeld, Münzen, Wertpapiere:<br>
+                            <div>Icons made by <a href="http://www.flaticon.com/authors/gregor-cresnar" title="Gregor Cresnar">Gregor Cresnar</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+                            <br>
+                            Ausweispapiere, EC- und Kreditkarte:<br>
+                            <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+                            <br>
+                            Kraftfahrzeugschlüssel:<br>
+                            <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+                            <br>
+                            Elektrogeräte:<br>
+                            <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+                            <br>
+                            Schmuck und Uhren:<br>
+                            <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+                            <br>
+                            Tresor:<br>
+                            <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+                            <br>
+                            Kleidung:<br>
+                            <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+                            <br>
+                            Alkohol und Zigaretten:<br>
+                            <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+                            <br>
+                            Waffen und  Munition:<br>
+                            <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+                            <br>
+                            Nahrungsmittel:<br>
+                            <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+                            <br>
+                            Kunstgegenstände:
+                            <div>Icons made by <a href="http://www.flaticon.com/authors/icomoon" title="Icomoon">Icomoon</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+
+                        </slot>
+                    </div>
+
+                    <div class="modal-footer">
+                        <slot name="footer">
+                            <a href="#impressum" class="modal-default-button" @click="$emit('close')">
+                                Bilderverweise schließen
+                            </a>
+                            <br>
+                        </slot>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </transition>
+</script>
 <div id="fullpage">
     <div class="section" id="section0">
 
@@ -268,7 +371,11 @@
                     <a href="http://kfn.de/wp-content/uploads/Forschungsberichte/FB_130.pdf" target="_blank">http://kfn.de/wp-content/uploads/Forschungsberichte/FB_130.pdf</a>
                     <br><br><br>
                     <strong>Verwendete Bilder:</strong><br>
-                    Headerbild: ©Christian Delbert/stock.adobe.com
+                    <a href="#impressum" id="show-modal" @click="showModal = true">Bilderverweise anzeigen</a>
+                    <!-- use the modal component, pass in the prop -->
+                    <modal v-if="showModal" @close="showModal = false">
+
+                    </modal>
 
                 </p>
             </div>
@@ -311,6 +418,7 @@
 <script src="js/jquery-treemap.js"></script>
 <script src="js/treemap-data.js"></script>
 <script src="js/bubblechart-data.js"></script>
+
 
 
 </body>

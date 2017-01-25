@@ -441,8 +441,8 @@ var sachschaden = Vue.component('sachschaden', {
     '<div id="sachschaden-chart"></div>' +
     '<div class="sliderContainer">' +
     '<div class="werteSlider">' +
-    '   <span v-on:click="changeChartDieb" class="dieb"  data-tooltip-position="top center" >Diebesgut</span>' +
-    '   <span v-on:click="changeChartSach"  class="sach" data-tooltip="Wert des Sachschadens einbleden" data-tooltip-position="top center" >Sachschaden</span>' +
+    '   <span v-on:click="changeChartDieb" class="dieb" data-tooltip="Wert des Diebesguts"  data-tooltip-position="top center" >Diebesgut</span>' +
+    '   <span v-on:click="changeChartSach"  class="sach" data-tooltip="Wert des Sachschadens" data-tooltip-position="top center" >Sachschaden</span>' +
     '</div>'+
     '</div>' +
     '</div>',
@@ -1033,6 +1033,10 @@ var windowChart = Vue.component('window-chart', {
 
 });
 
+var modal = Vue.component('modal', {
+    template: '#modal-template'
+})
+
 var index = new Vue({
     el: '#fullpage',
     components: {
@@ -1040,16 +1044,18 @@ var index = new Vue({
         'sachschaden' : sachschaden,
         'doorChart' : doorChart,
         'windowChart' : windowChart,
+        'modal' : modal,
 
     },
     data: function () {
 
         return {
-            einbruchsstellenTitle: "Einbruchsstellen",
+            einbruchsstellenTitle: "Einbruchstellen",
             einbruchsstellenDescription: descriptions.einbruchsstellenDescription,
             activeElement: false,
             door: false,
-            window: false
+            window: false,
+            showModal: false,
         }
 
     },
@@ -1066,7 +1072,15 @@ var index = new Vue({
             navigationPosition: 'right',
             navigationTooltips: ['Welcome','Risiko', 'Einbruchstellen', 'Einbruchswerkzeuge', 'Haushalte', 'Sachschaden', 'Stehlgüter', 'Impressum'],
 
+            onLeave: function(index, nextIndex, direction){
+                //it won't scroll if the destination is the 3rd section
+                if(nextIndex == 7){
+                    if(vm.showModal == true){
+                        return false;
 
+                    }
+                }
+            },
             afterLoad: function(anchorLink, index){
 
                 var navIndex = index-1;

@@ -10,7 +10,7 @@ $(".fp-controlArrow").click(function () {
             duration: 1500,
             easing: 'swing',
             step: function (now) {
-                $(this).text(now.toFixed(1)+"%");
+                $(this).html(now.toFixed(1)+"<sup>%</sup>");
             }
         });
     });
